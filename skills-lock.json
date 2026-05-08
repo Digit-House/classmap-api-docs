@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "api-design": {
+      "source": "akillness/oh-my-unity3d",
+      "sourceType": "github",
+      "skillPath": ".unity-skills/api-design/SKILL.md",
+      "computedHash": "8132650243b83bb5d5331f5cc51647245d373bad7177aa4f772ea9b4375e59df"
+    }
+  }
+}
