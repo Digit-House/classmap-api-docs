@@ -1,7 +1,7 @@
 # School Detail – General & Analytics
 
-![School Analytics Tab](../../images/school/analytics.png)
-![School General Tab](../../images/school/detail/general.png)
+![School Analytics Tab](../images/school/analytics.png)
+![School General Tab](../images/school/detail/general.png)
 
 ## Flow
 

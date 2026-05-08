@@ -1,6 +1,6 @@
 # School Infrastructure – Schools
 
-![Infrastructure Tab](../../images/school/infrastructure-detail.png)
+![Infrastructure Tab](../images/school/infrastructure-detail.png)
 
 ## Flow
 

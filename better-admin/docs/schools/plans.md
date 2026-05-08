@@ -1,12 +1,12 @@
 # School Plans – Schools
 
-![Plans List](../../images/school/detail/plan-list.png)
-![Add Plan Step 1 – Plan Information](../../images/school/detail/plan-add-form/plan-form-step1.png)
-![Add Plan Step 2 – Financial Assistance (empty)](../../images/school/detail/plan-add-form/plan-form-step2.png)
-![Add Plan Step 2 – One Budget Item](../../images/school/detail/plan-add-form/plan-form-step2-one-item.png)
-![Add Plan Step 2 – Two Budget Items](../../images/school/detail/plan-add-form/plan-form-step2-two-item.png.png)
-![Add Plan Step 3 – Supporting Information](../../images/school/detail/plan-add-form/plan-form-step3.png.png)
-![Plan View Details](../../images/school/detail/plan-add-form/plan-form-detail.png)
+![Plans List](../images/school/detail/plan-list.png)
+![Add Plan Step 1 – Plan Information](../images/school/detail/plan-add-form/plan-form-step1.png)
+![Add Plan Step 2 – Financial Assistance (empty)](../images/school/detail/plan-add-form/plan-form-step2.png)
+![Add Plan Step 2 – One Budget Item](../images/school/detail/plan-add-form/plan-form-step2-one-item.png)
+![Add Plan Step 2 – Two Budget Items](../images/school/detail/plan-add-form/plan-form-step2-two-item.png.png)
+![Add Plan Step 3 – Supporting Information](../images/school/detail/plan-add-form/plan-form-step3.png.png)
+![Plan View Details](../images/school/detail/plan-add-form/plan-form-detail.png)
 
 ## Flow
 

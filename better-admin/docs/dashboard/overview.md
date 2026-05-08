@@ -1,6 +1,6 @@
 # Dashboard Overview – Dashboard
 
-![Dashboard](../../images/dashboard/Dashboard.png)
+![Dashboard](../images/dashboard/Dashboard.png)
 
 ## Flow
 

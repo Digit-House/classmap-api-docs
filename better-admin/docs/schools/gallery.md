@@ -1,6 +1,6 @@
 # School Gallery – Schools
 
-![Gallery Tab](../../images/school/school-gallery.png)
+![Gallery Tab](../images/school/school-gallery.png)
 
 ## Flow
 

@@ -1,6 +1,6 @@
 # Daily Attendance – Schools
 
-![Daily Attendance Tab](../../images/school/detail/daily-attendance.png)
+![Daily Attendance Tab](../images/school/detail/daily-attendance.png)
 
 ## Flow
 

@@ -1,8 +1,8 @@
 # Classroom Management – Schools
 
-![Classroom List](../../images/school/detail/class.png)
-![Add New Class](../../images/school/detail/class-add.png)
-![Edit Class](../../images/school/detail/class-edit.png)
+![Classroom List](../images/school/detail/class.png)
+![Add New Class](../images/school/detail/class-add.png)
+![Edit Class](../images/school/detail/class-edit.png)
 
 ## Flow
 

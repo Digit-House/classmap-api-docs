@@ -1,6 +1,6 @@
 # Daily Logs – Schools
 
-![Daily Logs Tab](../../images/school/log-history.png)
+![Daily Logs Tab](../images/school/log-history.png)
 
 ## Flow
 

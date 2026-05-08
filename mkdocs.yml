@@ -1,0 +1,69 @@
+site_name: Class Map – API Docs
+site_description: REST API reference for the Class Map Education Management System (Admin Portal)
+site_author: Yoma Fleet / Digithouse
+docs_dir: better-admin/docs
+site_dir: site
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Auth:
+    - Login & Token Refresh: auth/login.md
+  - Dashboard:
+    - Overview: dashboard/overview.md
+  - Schools:
+    - School List: schools/list.md
+    - General & Analytics: schools/detail.md
+    - Daily Attendance: schools/attendance.md
+    - Classes: schools/classes.md
+    - Plans: schools/plans.md
+    - Infrastructure: schools/infrastructure.md
+    - Gallery: schools/gallery.md
+    - Daily Logs: schools/daily-logs.md
+    - Teachers: schools/teachers.md

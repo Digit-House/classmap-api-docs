@@ -1,9 +1,9 @@
 # Teacher Management – Schools
 
-![Teacher List](../../images/school/teacher/teacher-list.png)
-![Teacher Detail](../../images/school/teacher/teacher-detail.png)
-![Edit Teacher Information](../../images/school/teacher/teacher-edit.png)
-![Teacher Updated Successfully](../../images/school/teacher/teacher-edit-updated.png)
+![Teacher List](../images/school/teacher/teacher-list.png)
+![Teacher Detail](../images/school/teacher/teacher-detail.png)
+![Edit Teacher Information](../images/school/teacher/teacher-edit.png)
+![Teacher Updated Successfully](../images/school/teacher/teacher-edit-updated.png)
 
 ## Flow
 

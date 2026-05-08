@@ -1,6 +1,6 @@
 # Login – Auth
 
-![Login Screen](../../images/login/login.png)
+![Login Screen](../images/login/login.png)
 
 ## Flow
 

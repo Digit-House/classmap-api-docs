@@ -1,6 +1,6 @@
 # School Lists – Schools
 
-![School List](../../images/school/list.png)
+![School List](../images/school/list.png)
 
 ## Flow
 
