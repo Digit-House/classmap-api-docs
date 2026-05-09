@@ -37,13 +37,13 @@ POST /api/v1/auth/login
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `username_or_email` | string | Yes | Username or email address |
+| `email` | string | Yes | Username or email address |
 | `password` | string | Yes | User password |
 | `remember_me` | boolean | No | Extend session lifetime |
 
 ```json
 {
-  "username_or_email": "taylor@classmap.edu",
+  "email": "taylor@classmap.edu",
   "password": "secret123",
   "remember_me": false
 }
