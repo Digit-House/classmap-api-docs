@@ -8,22 +8,22 @@
 Admin opens Gallery tab
         |
         v
-GET /api/v1/schools/{id}/gallery          <-- default: all photos
+GET /api/v1/admin/schools/{id}/gallery          <-- default: all photos
         |
 Admin selects category filter (All / Attendance / Plan / Chat)
         |
         v
-GET /api/v1/schools/{id}/gallery?category=attendance
+GET /api/v1/admin/schools/{id}/gallery?category=attendance
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}/gallery`](#1-list-school-gallery) — Paginated photo gallery with category filter
+- [GET `/api/v1/admin/schools/{id}/gallery`](#1-list-school-gallery) — Paginated photo gallery with category filter
 
 ---
 
 ### 1. List School Gallery
-**GET** `/api/v1/schools/{id}/gallery`
+**GET** `/api/v1/admin/schools/{id}/gallery`
 
 **Headers**
 

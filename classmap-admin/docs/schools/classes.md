@@ -10,35 +10,35 @@
 Admin opens Class tab
         |
         v
-GET /api/v1/schools/{id}/classes       <-- list all classrooms
+GET /api/v1/admin/schools/{id}/classes       <-- list all classrooms
         |
         +---> Admin clicks "Add New Class"
         |              |
         |              v
-        |     POST /api/v1/schools/{id}/classes   (Submit)
+        |     POST /api/v1/admin/schools/{id}/classes   (Submit)
         |
         +---> Admin clicks "Edit" on a class
                        |
                        v
-             PUT /api/v1/schools/{id}/classes/{class_id}  (Save Changes)
+             PUT /api/v1/admin/schools/{id}/classes/{class_id}  (Save Changes)
         |
         +---> Admin clicks "Download"
                        |
                        v
-             GET /api/v1/schools/{id}/classes/export
+             GET /api/v1/admin/schools/{id}/classes/export
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}/classes`](#1-list-classrooms) — Paginated classroom list
-- [POST `/api/v1/schools/{id}/classes`](#2-create-classroom) — Add a new classroom
-- [PUT `/api/v1/schools/{id}/classes/{class_id}`](#3-update-classroom) — Full update of a classroom
-- [GET `/api/v1/schools/{id}/classes/export`](#4-export-classrooms) — Download classrooms as CSV/Excel
+- [GET `/api/v1/admin/schools/{id}/classes`](#1-list-classrooms) — Paginated classroom list
+- [POST `/api/v1/admin/schools/{id}/classes`](#2-create-classroom) — Add a new classroom
+- [PUT `/api/v1/admin/schools/{id}/classes/{class_id}`](#3-update-classroom) — Full update of a classroom
+- [GET `/api/v1/admin/schools/{id}/classes/export`](#4-export-classrooms) — Download classrooms as CSV/Excel
 
 ---
 
 ### 1. List Classrooms
-**GET** `/api/v1/schools/{id}/classes`
+**GET** `/api/v1/admin/schools/{id}/classes`
 
 **Headers**
 
@@ -111,7 +111,7 @@ GET /api/v1/schools/{id}/classes       <-- list all classrooms
 ---
 
 ### 2. Create Classroom
-**POST** `/api/v1/schools/{id}/classes`
+**POST** `/api/v1/admin/schools/{id}/classes`
 
 **Headers**
 
@@ -200,7 +200,7 @@ GET /api/v1/schools/{id}/classes       <-- list all classrooms
 ---
 
 ### 3. Update Classroom
-**PUT** `/api/v1/schools/{id}/classes/{class_id}`
+**PUT** `/api/v1/admin/schools/{id}/classes/{class_id}`
 
 **Headers**
 
@@ -272,7 +272,7 @@ Same fields as [Create Classroom](#2-create-classroom). All fields required for 
 ---
 
 ### 4. Export Classrooms
-**GET** `/api/v1/schools/{id}/classes/export`
+**GET** `/api/v1/admin/schools/{id}/classes/export`
 
 **Headers**
 

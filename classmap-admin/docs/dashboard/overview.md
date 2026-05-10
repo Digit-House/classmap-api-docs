@@ -8,21 +8,21 @@
 Admin logs in
      |
      v
-GET /api/v1/dashboard/overview   <-- summary stats + action-required items
+GET /api/v1/admin/dashboard/overview   <-- summary stats + action-required items
      |
      v
-GET /api/v1/dashboard/attendance  <-- daily attendance cards
+GET /api/v1/admin/dashboard/attendance  <-- daily attendance cards
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/dashboard/overview`](#1-get-dashboard-overview) — Summary stats and action-required items
-- [GET `/api/v1/dashboard/attendance`](#2-get-dashboard-daily-attendance) — Daily attendance list across all schools
+- [GET `/api/v1/admin/dashboard/overview`](#1-get-dashboard-overview) — Summary stats and action-required items
+- [GET `/api/v1/admin/dashboard/attendance`](#2-get-dashboard-daily-attendance) — Daily attendance list across all schools
 
 ---
 
 ### 1. Get Dashboard Overview
-**GET** `/api/v1/dashboard/overview`
+**GET** `/api/v1/admin/dashboard/overview`
 
 **Headers**
 
@@ -98,7 +98,7 @@ GET /api/v1/dashboard/attendance  <-- daily attendance cards
 ---
 
 ### 2. Get Dashboard Daily Attendance
-**GET** `/api/v1/dashboard/attendance`
+**GET** `/api/v1/admin/dashboard/attendance`
 
 **Headers**
 

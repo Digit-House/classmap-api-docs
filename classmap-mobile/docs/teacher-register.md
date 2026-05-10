@@ -25,16 +25,16 @@
 
 ## Endpoints
 
-- [GET `/api/v1/schools/lookup`](#1-lookup-school-by-code) — Validate school register code
-- [POST `/api/v1/teacher-registrations`](#2-create-teacher-registration) — Step 1: Submit teacher info
-- [POST `/api/v1/teacher-registrations/{id}/otp/request`](#3-request-otp) — Step 2: Request OTP for phone
-- [POST `/api/v1/teacher-registrations/{id}/otp/verify`](#4-verify-otp) — Step 2: Verify OTP code
-- [POST `/api/v1/teacher-registrations/{id}/submit`](#5-submit-registration) — Final submission
+- [GET `/api/v1/mobile/schools/lookup`](#1-lookup-school-by-code) — Validate school register code
+- [POST `/api/v1/mobile/teacher-registrations`](#2-create-teacher-registration) — Step 1: Submit teacher info
+- [POST `/api/v1/mobile/teacher-registrations/{id}/otp/request`](#3-request-otp) — Step 2: Request OTP for phone
+- [POST `/api/v1/mobile/teacher-registrations/{id}/otp/verify`](#4-verify-otp) — Step 2: Verify OTP code
+- [POST `/api/v1/mobile/teacher-registrations/{id}/submit`](#5-submit-registration) — Final submission
 
 ---
 
 ### 1. Lookup School by Code
-**GET** `/api/v1/schools/lookup?code={code}`
+**GET** `/api/v1/mobile/schools/lookup?code={code}`
 
 Validate a school register code and return school details. Called inline when the user enters a code.
 
@@ -87,7 +87,7 @@ Validate a school register code and return school details. Called inline when th
 ---
 
 ### 2. Create Teacher Registration
-**POST** `/api/v1/teacher-registrations`
+**POST** `/api/v1/mobile/teacher-registrations`
 
 Step 1: Create a teacher registration with school code, displayed name, and phone number.
 
@@ -167,7 +167,7 @@ Step 1: Create a teacher registration with school code, displayed name, and phon
 ---
 
 ### 3. Request OTP
-**POST** `/api/v1/teacher-registrations/{id}/otp/request`
+**POST** `/api/v1/mobile/teacher-registrations/{id}/otp/request`
 
 Step 2: Request an OTP to verify the teacher's phone number.
 
@@ -233,7 +233,7 @@ Step 2: Request an OTP to verify the teacher's phone number.
 ---
 
 ### 4. Verify OTP
-**POST** `/api/v1/teacher-registrations/{id}/otp/verify`
+**POST** `/api/v1/mobile/teacher-registrations/{id}/otp/verify`
 
 Verify the 6-digit OTP code for the teacher registration.
 
@@ -313,7 +313,7 @@ Verify the 6-digit OTP code for the teacher registration.
 ---
 
 ### 5. Submit Registration
-**POST** `/api/v1/teacher-registrations/{id}/submit`
+**POST** `/api/v1/mobile/teacher-registrations/{id}/submit`
 
 Final submission after phone verification. Status changes to `pending_review`. An SMS notification will be sent once approved.
 

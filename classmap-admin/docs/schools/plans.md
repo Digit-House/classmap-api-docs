@@ -14,7 +14,7 @@
 Admin opens Plans tab
         |
         v
-GET /api/v1/schools/{id}/plans         <-- list plans (filterable by status)
+GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by status)
         |
         +---> Admin clicks "Add New Plan"
         |       Step 1: Plan Information (type, title, objective, areas, targets, progress)
@@ -22,44 +22,44 @@ GET /api/v1/schools/{id}/plans         <-- list plans (filterable by status)
         |       Step 3: Supporting Information (photos upload, documents upload)
         |              |
         |              v (Submit)
-        |     POST /api/v1/schools/{id}/plans  (multipart/form-data)
+        |     POST /api/v1/admin/schools/{id}/plans  (multipart/form-data)
         |
         +---> Admin clicks "View Details"
         |              |
         |              v
-        |     GET /api/v1/schools/{id}/plans/{plan_id}
+        |     GET /api/v1/admin/schools/{id}/plans/{plan_id}
         |              |
         |              +---> "Edit Report"
         |              |         v
-        |              |    PUT /api/v1/schools/{id}/plans/{plan_id}
+        |              |    PUT /api/v1/admin/schools/{id}/plans/{plan_id}
         |              |
         |              +---> "Review Report"
         |              |         v
-        |              |    POST /api/v1/schools/{id}/plans/{plan_id}/review
+        |              |    POST /api/v1/admin/schools/{id}/plans/{plan_id}/review
         |              |
         |              +---> "Delete Report"
         |                        v
-        |                   DELETE /api/v1/schools/{id}/plans/{plan_id}
+        |                   DELETE /api/v1/admin/schools/{id}/plans/{plan_id}
         |
         +---> Admin clicks "Download"
                        v
-             GET /api/v1/schools/{id}/plans/export
+             GET /api/v1/admin/schools/{id}/plans/export
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}/plans`](#1-list-plans) — Paginated list of plans with status filter
-- [POST `/api/v1/schools/{id}/plans`](#2-create-plan) — Submit new plan (3-step form as multipart)
-- [GET `/api/v1/schools/{id}/plans/{plan_id}`](#3-get-plan-detail) — Full plan report detail
-- [PUT `/api/v1/schools/{id}/plans/{plan_id}`](#4-update-plan) — Full replace of a plan
-- [DELETE `/api/v1/schools/{id}/plans/{plan_id}`](#5-delete-plan) — Remove a plan
-- [POST `/api/v1/schools/{id}/plans/{plan_id}/review`](#6-review-plan) — Submit review decision
-- [GET `/api/v1/schools/{id}/plans/export`](#7-export-plans) — Download plans list
+- [GET `/api/v1/admin/schools/{id}/plans`](#1-list-plans) — Paginated list of plans with status filter
+- [POST `/api/v1/admin/schools/{id}/plans`](#2-create-plan) — Submit new plan (3-step form as multipart)
+- [GET `/api/v1/admin/schools/{id}/plans/{plan_id}`](#3-get-plan-detail) — Full plan report detail
+- [PUT `/api/v1/admin/schools/{id}/plans/{plan_id}`](#4-update-plan) — Full replace of a plan
+- [DELETE `/api/v1/admin/schools/{id}/plans/{plan_id}`](#5-delete-plan) — Remove a plan
+- [POST `/api/v1/admin/schools/{id}/plans/{plan_id}/review`](#6-review-plan) — Submit review decision
+- [GET `/api/v1/admin/schools/{id}/plans/export`](#7-export-plans) — Download plans list
 
 ---
 
 ### 1. List Plans
-**GET** `/api/v1/schools/{id}/plans`
+**GET** `/api/v1/admin/schools/{id}/plans`
 
 **Headers**
 
@@ -144,7 +144,7 @@ GET /api/v1/schools/{id}/plans         <-- list plans (filterable by status)
 ---
 
 ### 2. Create Plan
-**POST** `/api/v1/schools/{id}/plans`
+**POST** `/api/v1/admin/schools/{id}/plans`
 
 **multipart/form-data**
 
@@ -229,7 +229,7 @@ GET /api/v1/schools/{id}/plans         <-- list plans (filterable by status)
 ---
 
 ### 3. Get Plan Detail
-**GET** `/api/v1/schools/{id}/plans/{plan_id}`
+**GET** `/api/v1/admin/schools/{id}/plans/{plan_id}`
 
 **Headers**
 
@@ -330,7 +330,7 @@ GET /api/v1/schools/{id}/plans         <-- list plans (filterable by status)
 ---
 
 ### 4. Update Plan
-**PUT** `/api/v1/schools/{id}/plans/{plan_id}`
+**PUT** `/api/v1/admin/schools/{id}/plans/{plan_id}`
 
 **multipart/form-data**
 
@@ -386,7 +386,7 @@ Same fields as [Create Plan](#2-create-plan). All required fields must be includ
 ---
 
 ### 5. Delete Plan
-**DELETE** `/api/v1/schools/{id}/plans/{plan_id}`
+**DELETE** `/api/v1/admin/schools/{id}/plans/{plan_id}`
 
 **Headers**
 
@@ -419,7 +419,7 @@ No body returned.
 ---
 
 ### 6. Review Plan
-**POST** `/api/v1/schools/{id}/plans/{plan_id}/review`
+**POST** `/api/v1/admin/schools/{id}/plans/{plan_id}/review`
 
 **Headers**
 
@@ -482,7 +482,7 @@ No body returned.
 ---
 
 ### 7. Export Plans
-**GET** `/api/v1/schools/{id}/plans/export`
+**GET** `/api/v1/admin/schools/{id}/plans/export`
 
 **Headers**
 

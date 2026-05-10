@@ -8,7 +8,7 @@
 Admin navigates to Schools
         |
         v
-GET /api/v1/schools   <-- paginated list with search + status filter
+GET /api/v1/admin/schools   <-- paginated list with search + status filter
         |
         v
 Map pins + sidebar list rendered
@@ -16,12 +16,12 @@ Map pins + sidebar list rendered
 
 ## Endpoints
 
-- [GET `/api/v1/schools`](#1-list-schools) — Paginated list of all schools with map data
+- [GET `/api/v1/admin/schools`](#1-list-schools) — Paginated list of all schools with map data
 
 ---
 
 ### 1. List Schools
-**GET** `/api/v1/schools`
+**GET** `/api/v1/admin/schools`
 
 **Headers**
 

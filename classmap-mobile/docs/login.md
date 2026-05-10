@@ -24,14 +24,14 @@
 
 ## Endpoints
 
-- [POST `/api/v1/auth/otp/request`](#1-request-otp) — Send OTP to phone number
-- [POST `/api/v1/auth/otp/verify`](#2-verify-otp) — Verify 6-digit OTP code
-- [POST `/api/v1/auth/pin/setup`](#3-setup-pin) — Create PIN and biometric preference
+- [POST `/api/v1/mobile/auth/otp/request`](#1-request-otp) — Send OTP to phone number
+- [POST `/api/v1/mobile/auth/otp/verify`](#2-verify-otp) — Verify 6-digit OTP code
+- [POST `/api/v1/mobile/auth/pin/setup`](#3-setup-pin) — Create PIN and biometric preference
 
 ---
 
 ### 1. Request OTP
-**POST** `/api/v1/auth/otp/request`
+**POST** `/api/v1/mobile/auth/otp/request`
 
 Send a 6-digit OTP via SMS to the provided phone number.
 
@@ -105,7 +105,7 @@ Send a 6-digit OTP via SMS to the provided phone number.
 ---
 
 ### 2. Verify OTP
-**POST** `/api/v1/auth/otp/verify`
+**POST** `/api/v1/mobile/auth/otp/verify`
 
 Verify the 6-digit OTP code. Returns tokens for existing users or a temporary token for new users who need to set up PIN.
 
@@ -198,7 +198,7 @@ Verify the 6-digit OTP code. Returns tokens for existing users or a temporary to
 ---
 
 ### 3. Setup PIN
-**POST** `/api/v1/auth/pin/setup`
+**POST** `/api/v1/mobile/auth/pin/setup`
 
 Create a 4-6 digit PIN and optionally enable biometric security. Only callable with a valid `temp_token` from OTP verify for new users.
 

@@ -13,18 +13,36 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"taylor@classmap.edu\",\n  \"password\": \"secret123\",\n  \"remember_me\": false\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "auth", "login"]
+              "raw": "{{base_url}}/api/v1/admin/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "auth",
+                "login"
+              ]
             }
           },
           "response": [
@@ -32,13 +50,38 @@
               "name": "200 – Login Successful",
               "originalRequest": {
                 "method": "POST",
-                "header": [{ "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"email\":\"taylor@classmap.edu\",\"password\":\"secret123\",\"remember_me\":false}" },
-                "url": { "raw": "{{base_url}}/api/v1/auth/login", "host": ["{{base_url}}"], "path": ["api","v1","auth","login"] }
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"taylor@classmap.edu\",\"password\":\"secret123\",\"remember_me\":false}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "auth",
+                    "login"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"refresh_token\": \"dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...\",\n    \"expires_in\": 3600,\n    \"token_type\": \"Bearer\",\n    \"user\": { \"id\": \"usr_001\", \"display_name\": \"Taylor\", \"email\": \"taylor@classmap.edu\", \"role\": \"admin\" }\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Login successful\"\n}",
               "cookie": []
             },
@@ -46,13 +89,38 @@
               "name": "401 – Invalid Credentials",
               "originalRequest": {
                 "method": "POST",
-                "header": [{ "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"email\":\"bad@example.com\",\"password\":\"wrong\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/auth/login", "host": ["{{base_url}}"], "path": ["api","v1","auth","login"] }
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"email\":\"bad@example.com\",\"password\":\"wrong\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "auth",
+                    "login"
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": false,\n  \"data\": null,\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"Invalid username/email or password.\",\n    \"request_id\": \"a1b2c3d4-0000-0000-0000-000000000001\"\n  }\n}",
               "cookie": []
             }
@@ -63,18 +131,36 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/auth/refresh",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "auth", "refresh"]
+              "raw": "{{base_url}}/api/v1/admin/auth/refresh",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "auth",
+                "refresh"
+              ]
             }
           },
           "response": [
@@ -82,13 +168,38 @@
               "name": "200 – Token Refreshed",
               "originalRequest": {
                 "method": "POST",
-                "header": [{ "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"refresh_token\":\"dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/auth/refresh", "host": ["{{base_url}}"], "path": ["api","v1","auth","refresh"] }
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"refresh_token\":\"dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/auth/refresh",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "auth",
+                    "refresh"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...(new)\",\n    \"refresh_token\": \"dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...(rotated)\",\n    \"expires_in\": 3600,\n    \"token_type\": \"Bearer\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Token refreshed successfully\"\n}",
               "cookie": []
             },
@@ -96,13 +207,38 @@
               "name": "401 – Invalid or Expired Refresh Token",
               "originalRequest": {
                 "method": "POST",
-                "header": [{ "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"refresh_token\":\"expired_or_invalid_token\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/auth/refresh", "host": ["{{base_url}}"], "path": ["api","v1","auth","refresh"] }
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"refresh_token\":\"expired_or_invalid_token\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/auth/refresh",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "auth",
+                    "refresh"
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": false,\n  \"data\": null,\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"Refresh token is invalid or has expired.\",\n    \"request_id\": \"a1b2c3d4-0000-0000-0000-000000000002\"\n  }\n}",
               "cookie": []
             }
@@ -118,14 +254,31 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/dashboard/overview",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "dashboard", "overview"]
+              "raw": "{{base_url}}/api/v1/admin/dashboard/overview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "dashboard",
+                "overview"
+              ]
             }
           },
           "response": [
@@ -133,12 +286,34 @@
               "name": "200 – Dashboard Summary",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/dashboard/overview", "host": ["{{base_url}}"], "path": ["api","v1","dashboard","overview"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/dashboard/overview",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "dashboard",
+                    "overview"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"summary\": {\n      \"total_school\": 1248,\n      \"total_school_change\": -12,\n      \"active_plans\": 4892,\n      \"active_plans_change\": 1050,\n      \"total_survey\": 342,\n      \"total_teacher\": 3456\n    },\n    \"action_required\": [\n      { \"id\": \"act_001\", \"type\": \"SCHOOL_DEVELOPMENT_PLAN\", \"priority\": \"high\", \"title\": \"School Development Plan Request\" }\n    ]\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -149,17 +324,40 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/dashboard/attendance?page=1&per_page=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "dashboard", "attendance"],
+              "raw": "{{base_url}}/api/v1/admin/dashboard/attendance?page=1&per_page=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "dashboard",
+                "attendance"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "per_page", "value": "10" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
               ]
             }
           },
@@ -168,12 +366,34 @@
               "name": "200 – Attendance List",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/dashboard/attendance", "host": ["{{base_url}}"], "path": ["api","v1","dashboard","attendance"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/dashboard/attendance",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "dashboard",
+                    "attendance"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": \"att_001\",\n      \"school_name\": \"Ngat Pyae Taw\",\n      \"teacher_name\": \"Thu Zarkhin\",\n      \"present_count\": { \"male\": 45, \"female\": 52, \"swd\": 8, \"total\": 105 },\n      \"absent_count\": { \"male\": 3, \"female\": 2, \"swd\": 1, \"total\": 6 }\n    }\n  ],\n  \"meta\": { \"page\": 1, \"per_page\": 10, \"total\": 42 },\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -189,20 +409,54 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools?page=1&per_page=20",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools"],
+              "raw": "{{base_url}}/api/v1/admin/schools?page=1&per_page=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "per_page", "value": "20" },
-                { "key": "search", "value": "", "disabled": true },
-                { "key": "status", "value": "active", "disabled": true },
-                { "key": "state", "value": "", "disabled": true }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "active",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
               ]
             }
           },
@@ -211,12 +465,33 @@
               "name": "200 – School List",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools", "host": ["{{base_url}}"], "path": ["api","v1","schools"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"sch_001\", \"name_en\": \"Lincoln High School\", \"status\": \"active\", \"review_status\": \"verified\" }\n  ],\n  \"meta\": { \"page\": 1, \"per_page\": 20, \"total\": 1248 },\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -232,14 +507,31 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}"
+              ]
             }
           },
           "response": [
@@ -247,12 +539,34 @@
               "name": "200 – School Profile",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"sch_001\",\n    \"identity\": { \"name_en\": \"Lincoln High School\", \"school_code\": \"O1938DJ&\", \"review_status\": \"verified\" },\n    \"location\": { \"state\": \"Ayeyarwady Region\", \"district\": \"Hinthada District\", \"postcode\": \"1234\" },\n    \"education_levels\": { \"offering\": [\"kindergarten_plus5\", \"primary\", \"middle\", \"high_school\"] }\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             },
@@ -260,12 +574,34 @@
               "name": "404 – School Not Found",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/bad_id", "host": ["{{base_url}}"], "path": ["api","v1","schools","bad_id"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/bad_id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "bad_id"
+                  ]
+                }
               },
               "status": "Not Found",
               "code": 404,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": false,\n  \"data\": null,\n  \"error\": { \"code\": \"SCHOOL_NOT_FOUND\", \"message\": \"The requested school does not exist.\", \"request_id\": \"a1b2c3d4-0001\" }\n}",
               "cookie": []
             }
@@ -276,14 +612,32 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/analytics",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "analytics"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/analytics",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "analytics"
+              ]
             }
           },
           "response": [
@@ -291,12 +645,35 @@
               "name": "200 – Analytics Data",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/analytics", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","analytics"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/analytics",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "analytics"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"summary\": { \"total_teachers\": 66, \"total_students\": 1044, \"students_with_disabilities\": 47, \"teacher_student_ratio\": \"1:16\" },\n    \"enrollment_growth\": [{ \"year\": 2024, \"students\": 1044, \"teachers\": 66 }]\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -307,19 +684,40 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name_en\": \"Lincoln High School\",\n  \"name_mm\": \"Lincoln High School\",\n  \"abbreviation_en\": \"LHS\",\n  \"state\": \"Ayeyarwady Region\",\n  \"district\": \"Hinthada District\",\n  \"postcode\": \"1234\",\n  \"primary_email\": \"contact@classmap.edu\",\n  \"education_levels_offering\": [\"kindergarten_plus5\", \"primary\", \"middle\", \"high_school\"]\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}"
+              ]
             }
           },
           "response": [
@@ -327,13 +725,42 @@
               "name": "200 – Profile Updated",
               "originalRequest": {
                 "method": "PATCH",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"name_en\":\"Lincoln High School\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name_en\":\"Lincoln High School\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"sch_001\", \"name_en\": \"Lincoln High School\", \"last_updated\": \"2026-05-08T10:00:00Z\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"School profile updated successfully\"\n}",
               "cookie": []
             }
@@ -349,22 +776,66 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/attendance?page=1&per_page=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "attendance"],
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/attendance?page=1&per_page=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "attendance"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "per_page", "value": "10" },
-                { "key": "teacher_name", "value": "", "disabled": true },
-                { "key": "class_time", "value": "day", "disabled": true },
-                { "key": "education_level", "value": "", "disabled": true },
-                { "key": "from_date", "value": "2026-05-01", "disabled": true },
-                { "key": "to_date", "value": "2026-05-31", "disabled": true }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                },
+                {
+                  "key": "teacher_name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "class_time",
+                  "value": "day",
+                  "disabled": true
+                },
+                {
+                  "key": "education_level",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "from_date",
+                  "value": "2026-05-01",
+                  "disabled": true
+                },
+                {
+                  "key": "to_date",
+                  "value": "2026-05-31",
+                  "disabled": true
+                }
               ]
             }
           },
@@ -373,12 +844,35 @@
               "name": "200 – Attendance Logs",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/attendance", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","attendance"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/attendance",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "attendance"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"att_001\", \"teacher_name\": \"Thu Zarkhin\", \"class_time\": \"Day School (9:00 AM - 3:00 PM)\", \"date\": \"2026-05-05T12:00:00Z\", \"present_count\": { \"male\": 45, \"female\": 52, \"swd\": 8, \"total\": 105 }, \"absent_count\": { \"male\": 3, \"female\": 2, \"swd\": 1, \"total\": 6 } }\n  ],\n  \"meta\": { \"page\": 1, \"per_page\": 10, \"total\": 24 },\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -394,17 +888,41 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/classes?page=1&per_page=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "classes"],
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/classes?page=1&per_page=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "classes"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "per_page", "value": "10" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
               ]
             }
           },
@@ -413,12 +931,35 @@
               "name": "200 – Classroom List",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/classes", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","classes"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/classes",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "classes"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"cls_001\", \"classroom_name\": \"Kindergarten\", \"grade_level\": \"Grade 1\", \"section\": \"A\", \"teacher\": { \"id\": \"tch_001\", \"name\": \"Daw Hla Hla\" }, \"student_count\": { \"total\": 35, \"male\": 18, \"female\": 15, \"swd\": 2 } }\n  ],\n  \"meta\": { \"page\": 1, \"per_page\": 10, \"total\": 8 },\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -429,19 +970,41 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"classroom_name\": \"Kindergarten\",\n  \"grade_level\": \"Grade 1\",\n  \"section\": \"A\",\n  \"academic_year\": \"2026 - 2027\",\n  \"course_type\": \"Long terms\",\n  \"start_date\": \"2026-06-01\",\n  \"end_date\": \"2027-02-28\",\n  \"male_count\": 18,\n  \"female_count\": 15,\n  \"swd_count\": 2,\n  \"teacher_id\": \"{{teacher_id}}\",\n  \"additional_info\": \"\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/classes",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "classes"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/classes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "classes"
+              ]
             }
           },
           "response": [
@@ -449,13 +1012,43 @@
               "name": "201 – Classroom Created",
               "originalRequest": {
                 "method": "POST",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"classroom_name\":\"Kindergarten\",\"grade_level\":\"Grade 1\",\"section\":\"A\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/classes", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","classes"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"classroom_name\":\"Kindergarten\",\"grade_level\":\"Grade 1\",\"section\":\"A\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/classes",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "classes"
+                  ]
+                }
               },
               "status": "Created",
               "code": 201,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"cls_009\", \"classroom_name\": \"Kindergarten\", \"grade_level\": \"Grade 1\", \"section\": \"A\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Classroom created successfully\"\n}",
               "cookie": []
             }
@@ -466,19 +1059,42 @@
           "request": {
             "method": "PUT",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"classroom_name\": \"Kindergarten\",\n  \"grade_level\": \"Grade 1\",\n  \"section\": \"A\",\n  \"academic_year\": \"2026 - 2027\",\n  \"course_type\": \"Long terms\",\n  \"start_date\": \"2026-06-01\",\n  \"end_date\": \"2027-02-28\",\n  \"male_count\": 20,\n  \"female_count\": 15,\n  \"swd_count\": 2,\n  \"teacher_id\": \"{{teacher_id}}\",\n  \"additional_info\": \"\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/classes/{{class_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "classes", "{{class_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/classes/{{class_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "classes",
+                "{{class_id}}"
+              ]
             }
           },
           "response": [
@@ -486,13 +1102,44 @@
               "name": "200 – Classroom Updated",
               "originalRequest": {
                 "method": "PUT",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"male_count\":20}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/classes/{{class_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","classes","{{class_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"male_count\":20}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/classes/{{class_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "classes",
+                    "{{class_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"cls_001\", \"classroom_name\": \"Kindergarten\", \"student_count\": { \"male\": 20, \"female\": 15, \"swd\": 2, \"total\": 37 } },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Classroom updated successfully\"\n}",
               "cookie": []
             }
@@ -503,13 +1150,29 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/classes/export",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "classes", "export"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/classes/export",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "classes",
+                "export"
+              ]
             }
           },
           "response": []
@@ -524,18 +1187,46 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans?page=1&per_page=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "plans"],
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans?page=1&per_page=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "plans"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "per_page", "value": "10" },
-                { "key": "status", "value": "pending", "disabled": true }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "pending",
+                  "disabled": true
+                }
               ]
             }
           },
@@ -544,12 +1235,35 @@
               "name": "200 – Plans List",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","plans"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "plans"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"plan_001\", \"plan_type\": \"School Development Plan\", \"title\": \"Round 1 – Implementation Report\", \"status\": \"approved\" },\n    { \"id\": \"plan_002\", \"plan_type\": \"Annual Budget Review\", \"title\": \"Annual Supplies\", \"status\": \"pending\" }\n  ],\n  \"meta\": { \"page\": 1, \"per_page\": 10, \"total\": 8 },\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -560,27 +1274,80 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "formdata",
               "formdata": [
-                { "key": "plan_type", "value": "School Development Plan", "type": "text" },
-                { "key": "plan_title", "value": "2026 Infrastructure Upgrade", "type": "text" },
-                { "key": "objective", "value": "Improve classroom facilities", "type": "text" },
-                { "key": "areas_for_development", "value": "[\"Infrastructure\", \"Teacher Training\"]", "type": "text" },
-                { "key": "targets", "value": "Complete renovation of 3 classrooms by Dec 2026", "type": "text" },
-                { "key": "progress", "value": "Planning phase completed", "type": "text" },
-                { "key": "budget_items", "value": "[{\"budget_line\":\"Item A\",\"item_description\":\"Brick\",\"unit\":\"pcs\",\"quantity\":1000,\"estimate_cost\":1000}]", "type": "text" },
-                { "key": "photos", "value": "", "type": "file", "src": "" },
-                { "key": "documents", "value": "", "type": "file", "src": "" }
+                {
+                  "key": "plan_type",
+                  "value": "School Development Plan",
+                  "type": "text"
+                },
+                {
+                  "key": "plan_title",
+                  "value": "2026 Infrastructure Upgrade",
+                  "type": "text"
+                },
+                {
+                  "key": "objective",
+                  "value": "Improve classroom facilities",
+                  "type": "text"
+                },
+                {
+                  "key": "areas_for_development",
+                  "value": "[\"Infrastructure\", \"Teacher Training\"]",
+                  "type": "text"
+                },
+                {
+                  "key": "targets",
+                  "value": "Complete renovation of 3 classrooms by Dec 2026",
+                  "type": "text"
+                },
+                {
+                  "key": "progress",
+                  "value": "Planning phase completed",
+                  "type": "text"
+                },
+                {
+                  "key": "budget_items",
+                  "value": "[{\"budget_line\":\"Item A\",\"item_description\":\"Brick\",\"unit\":\"pcs\",\"quantity\":1000,\"estimate_cost\":1000}]",
+                  "type": "text"
+                },
+                {
+                  "key": "photos",
+                  "value": "",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "documents",
+                  "value": "",
+                  "type": "file",
+                  "src": ""
+                }
               ]
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "plans"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "plans"
+              ]
             }
           },
           "response": [
@@ -588,12 +1355,35 @@
               "name": "201 – Plan Created",
               "originalRequest": {
                 "method": "POST",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","plans"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "plans"
+                  ]
+                }
               },
               "status": "Created",
               "code": 201,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"plan_009\", \"plan_type\": \"School Development Plan\", \"status\": \"pending\", \"created_at\": \"2026-05-08T10:00:00Z\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Plan submitted successfully\"\n}",
               "cookie": []
             }
@@ -604,14 +1394,33 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "plans", "{{plan_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "plans",
+                "{{plan_id}}"
+              ]
             }
           },
           "response": [
@@ -619,12 +1428,36 @@
               "name": "200 – Plan Detail",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","plans","{{plan_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "plans",
+                    "{{plan_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"plan_001\",\n    \"report_information\": { \"plan_type\": \"School Development Plan\", \"plan_title\": \"Round 1 – Implementation Report\", \"status\": \"approved\" },\n    \"financial_assistance\": { \"budget_items\": [] },\n    \"supporting_information\": { \"photos\": [], \"documents\": [] }\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -635,27 +1468,81 @@
           "request": {
             "method": "PUT",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "formdata",
               "formdata": [
-                { "key": "plan_type", "value": "School Development Plan", "type": "text" },
-                { "key": "plan_title", "value": "2026 Infrastructure Upgrade (Revised)", "type": "text" },
-                { "key": "objective", "value": "Improve classroom facilities", "type": "text" },
-                { "key": "areas_for_development", "value": "[\"Infrastructure\"]", "type": "text" },
-                { "key": "targets", "value": "Complete renovation by Dec 2026", "type": "text" },
-                { "key": "progress", "value": "Phase 2 in progress", "type": "text" },
-                { "key": "budget_items", "value": "[]", "type": "text" },
-                { "key": "photos", "value": "", "type": "file", "src": "" },
-                { "key": "documents", "value": "", "type": "file", "src": "" }
+                {
+                  "key": "plan_type",
+                  "value": "School Development Plan",
+                  "type": "text"
+                },
+                {
+                  "key": "plan_title",
+                  "value": "2026 Infrastructure Upgrade (Revised)",
+                  "type": "text"
+                },
+                {
+                  "key": "objective",
+                  "value": "Improve classroom facilities",
+                  "type": "text"
+                },
+                {
+                  "key": "areas_for_development",
+                  "value": "[\"Infrastructure\"]",
+                  "type": "text"
+                },
+                {
+                  "key": "targets",
+                  "value": "Complete renovation by Dec 2026",
+                  "type": "text"
+                },
+                {
+                  "key": "progress",
+                  "value": "Phase 2 in progress",
+                  "type": "text"
+                },
+                {
+                  "key": "budget_items",
+                  "value": "[]",
+                  "type": "text"
+                },
+                {
+                  "key": "photos",
+                  "value": "",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "documents",
+                  "value": "",
+                  "type": "file",
+                  "src": ""
+                }
               ]
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "plans", "{{plan_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "plans",
+                "{{plan_id}}"
+              ]
             }
           },
           "response": [
@@ -663,12 +1550,36 @@
               "name": "200 – Plan Updated",
               "originalRequest": {
                 "method": "PUT",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","plans","{{plan_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "plans",
+                    "{{plan_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"plan_001\", \"plan_title\": \"2026 Infrastructure Upgrade (Revised)\", \"status\": \"pending\", \"updated_at\": \"2026-05-08T11:00:00Z\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Plan updated successfully\"\n}",
               "cookie": []
             }
@@ -679,13 +1590,29 @@
           "request": {
             "method": "DELETE",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "plans", "{{plan_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "plans",
+                "{{plan_id}}"
+              ]
             }
           },
           "response": [
@@ -693,8 +1620,27 @@
               "name": "204 – Plan Deleted",
               "originalRequest": {
                 "method": "DELETE",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","plans","{{plan_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "plans",
+                    "{{plan_id}}"
+                  ]
+                }
               },
               "status": "No Content",
               "code": 204,
@@ -709,19 +1655,43 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"decision\": \"approved\",\n  \"remarks\": \"Plan meets all infrastructure requirements.\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}/review",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "plans", "{{plan_id}}", "review"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}/review",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "plans",
+                "{{plan_id}}",
+                "review"
+              ]
             }
           },
           "response": [
@@ -729,13 +1699,45 @@
               "name": "200 – Plan Reviewed",
               "originalRequest": {
                 "method": "POST",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"decision\":\"approved\",\"remarks\":\"Approved.\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/{{plan_id}}/review", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","plans","{{plan_id}}","review"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"decision\":\"approved\",\"remarks\":\"Approved.\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/{{plan_id}}/review",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "plans",
+                    "{{plan_id}}",
+                    "review"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"plan_id\": \"plan_001\", \"status\": \"approved\", \"reviewed_at\": \"2026-05-08T12:00:00Z\", \"reviewed_by\": \"Taylor\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Plan reviewed successfully\"\n}",
               "cookie": []
             }
@@ -746,13 +1748,29 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/plans/export",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "plans", "export"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/plans/export",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "plans",
+                "export"
+              ]
             }
           },
           "response": []
@@ -767,16 +1785,37 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/infrastructure?building_type=school",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "infrastructure"],
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/infrastructure?building_type=school",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "infrastructure"
+              ],
               "query": [
-                { "key": "building_type", "value": "school" }
+                {
+                  "key": "building_type",
+                  "value": "school"
+                }
               ]
             }
           },
@@ -785,12 +1824,35 @@
               "name": "200 – Infrastructure Data",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/infrastructure", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","infrastructure"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/infrastructure",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "infrastructure"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"buildings\": [\n      { \"id\": \"bld_001\", \"building_number\": 1, \"building_name\": \"Availability of School Infrastructure\", \"facilities\": [ { \"name\": \"Classroom\", \"count\": 3 }, { \"name\": \"Library\", \"count\": 1 } ] }\n    ],\n    \"related_plans\": { \"summary\": { \"total\": 8, \"pending\": 2, \"approved\": 2, \"funding_unavailable\": 4 }, \"plans\": [] }\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -801,19 +1863,42 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"facilities\": [\n    { \"name\": \"Classroom\", \"count\": 4 },\n    { \"name\": \"Library\", \"count\": 1 },\n    { \"name\": \"Restrooms\", \"count\": 5 },\n    { \"name\": \"Computer Lab\", \"count\": 1 },\n    { \"name\": \"Principal's office\", \"count\": 1 },\n    { \"name\": \"Staff/Teacher's room\", \"count\": 2 },\n    { \"name\": \"Administrative office\", \"count\": 1 }\n  ]\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/infrastructure/{{building_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "infrastructure", "{{building_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/infrastructure/{{building_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "infrastructure",
+                "{{building_id}}"
+              ]
             }
           },
           "response": [
@@ -821,13 +1906,44 @@
               "name": "200 – Facility Updated",
               "originalRequest": {
                 "method": "PATCH",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"facilities\":[]}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/infrastructure/{{building_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","infrastructure","{{building_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"facilities\":[]}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/infrastructure/{{building_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "infrastructure",
+                    "{{building_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"building_id\": \"bld_001\", \"updated_at\": \"2026-05-08T10:00:00Z\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Facility updated successfully\"\n}",
               "cookie": []
             }
@@ -843,18 +1959,46 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/gallery?page=1&per_page=20",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "gallery"],
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/gallery?page=1&per_page=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "gallery"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "per_page", "value": "20" },
-                { "key": "category", "value": "attendance", "disabled": true }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                },
+                {
+                  "key": "category",
+                  "value": "attendance",
+                  "disabled": true
+                }
               ]
             }
           },
@@ -863,12 +2007,35 @@
               "name": "200 – Gallery Photos",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/gallery", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","gallery"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/gallery",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "gallery"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"img_001\", \"category\": \"attendance\", \"url\": \"https://storage.example.com/gallery/img_001.jpg\", \"uploaded_at\": \"2026-05-01T09:00:00Z\" }\n  ],\n  \"meta\": { \"page\": 1, \"per_page\": 20, \"total\": 3 },\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -884,17 +2051,41 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/daily-logs?page=1&per_page=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "daily-logs"],
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/daily-logs?page=1&per_page=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "daily-logs"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "per_page", "value": "10" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
               ]
             }
           },
@@ -903,12 +2094,35 @@
               "name": "200 – Daily Logs",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/daily-logs", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","daily-logs"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/daily-logs",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "daily-logs"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"log_001\", \"time\": \"09:15:23\", \"date\": \"2026-05-07\", \"account\": { \"name\": \"Daw Hla Hla\", \"account_id\": \"T-2041\" }, \"action\": \"Updated Profile Information\", \"changes\": \"Changed phone number and emergency contact\", \"status\": \"success\" }\n  ],\n  \"meta\": { \"page\": 1, \"per_page\": 10, \"total\": 8 },\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -924,14 +2138,32 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "teachers"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "teachers"
+              ]
             }
           },
           "response": [
@@ -939,12 +2171,35 @@
               "name": "200 – Teacher List",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","teachers"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "teachers"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"tch_001\", \"display_name\": \"Aung Ko Ko\", \"role\": \"principal\", \"email\": \"aungkokoko@yahoo.com\", \"phone\": \"(+95) 987 654 321\" },\n    { \"id\": \"tch_002\", \"display_name\": \"Daw Hla Hla\", \"role\": \"teacher\", \"email\": \"dawhlahla@gmail.com\", \"phone\": \"(+95) 123 456 789\" }\n  ],\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -955,14 +2210,33 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "teachers", "{{teacher_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "teachers",
+                "{{teacher_id}}"
+              ]
             }
           },
           "response": [
@@ -970,12 +2244,36 @@
               "name": "200 – Teacher Profile",
               "originalRequest": {
                 "method": "GET",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","teachers","{{teacher_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "teachers",
+                    "{{teacher_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"tch_002\",\n    \"display_name\": \"Daw Hla Hla\",\n    \"phone_number\": \"xxxxx8118\",\n    \"account_type\": \"Teacher\",\n    \"principle_tag\": \"Principal\",\n    \"personal_information\": { \"gender\": \"Female\", \"birth_year\": 1992, \"age\": 34, \"qualification\": \"M.Sc.\" },\n    \"timestamps\": { \"last_login_on\": \"2026-04-30T10:49:00Z\", \"deactivated_on\": null }\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Successfully\"\n}",
               "cookie": []
             }
@@ -986,19 +2284,42 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"title\": \"Daw\",\n  \"name\": \"Hla Hla\",\n  \"email\": \"dawhlahla@gmail.com\",\n  \"phone_number\": \"(+95) 123 456 789\",\n  \"qualifications\": \"M.Sc.\",\n  \"birth_year\": 1992,\n  \"gender\": \"female\",\n  \"is_principal\": true,\n  \"publish_account\": true\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "teachers", "{{teacher_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "teachers",
+                "{{teacher_id}}"
+              ]
             }
           },
           "response": [
@@ -1006,13 +2327,44 @@
               "name": "200 – Teacher Updated",
               "originalRequest": {
                 "method": "PATCH",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"title\":\"Daw\",\"name\":\"Hla Hla\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","teachers","{{teacher_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"title\":\"Daw\",\"name\":\"Hla Hla\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "teachers",
+                    "{{teacher_id}}"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"tch_002\", \"display_name\": \"Daw Hla Hla\", \"updated_at\": \"2026-05-08T10:00:00Z\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Teacher information saved successfully\"\n}",
               "cookie": []
             }
@@ -1023,19 +2375,43 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"reason\": \"Teacher resigned.\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}/deactivate",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "teachers", "{{teacher_id}}", "deactivate"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}/deactivate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "teachers",
+                "{{teacher_id}}",
+                "deactivate"
+              ]
             }
           },
           "response": [
@@ -1043,13 +2419,45 @@
               "name": "200 – Teacher Deactivated",
               "originalRequest": {
                 "method": "PATCH",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"reason\":\"Teacher resigned.\"}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}/deactivate", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","teachers","{{teacher_id}}","deactivate"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"reason\":\"Teacher resigned.\"}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}/deactivate",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "teachers",
+                    "{{teacher_id}}",
+                    "deactivate"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"tch_002\", \"status\": \"deactivated\", \"deactivated_on\": \"2026-05-08T10:00:00Z\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Teacher account deactivated successfully\"\n}",
               "cookie": []
             }
@@ -1060,19 +2468,43 @@
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"is_principal\": false\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}/principle",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "teachers", "{{teacher_id}}", "principle"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}/principle",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "teachers",
+                "{{teacher_id}}",
+                "principle"
+              ]
             }
           },
           "response": [
@@ -1080,13 +2512,45 @@
               "name": "200 – Principal Status Toggled",
               "originalRequest": {
                 "method": "PATCH",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }, { "key": "Content-Type", "value": "application/json" }],
-                "body": { "mode": "raw", "raw": "{\"is_principal\":false}" },
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}/principle", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","teachers","{{teacher_id}}","principle"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"is_principal\":false}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}/principle",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "teachers",
+                    "{{teacher_id}}",
+                    "principle"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
               "body": "{\n  \"success\": true,\n  \"data\": { \"id\": \"tch_002\", \"is_principal\": false, \"updated_at\": \"2026-05-08T10:00:00Z\" },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Principal status updated successfully\"\n}",
               "cookie": []
             }
@@ -1097,13 +2561,29 @@
           "request": {
             "method": "DELETE",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{access_token}}" },
-              { "key": "X-Request-ID", "value": "{{$guid}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{$guid}}"
+              }
             ],
             "url": {
-              "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "schools", "{{school_id}}", "teachers", "{{teacher_id}}"]
+              "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "schools",
+                "{{school_id}}",
+                "teachers",
+                "{{teacher_id}}"
+              ]
             }
           },
           "response": [
@@ -1111,8 +2591,27 @@
               "name": "204 – Teacher Deleted",
               "originalRequest": {
                 "method": "DELETE",
-                "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
-                "url": { "raw": "{{base_url}}/api/v1/schools/{{school_id}}/teachers/{{teacher_id}}", "host": ["{{base_url}}"], "path": ["api","v1","schools","{{school_id}}","teachers","{{teacher_id}}"] }
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/admin/schools/{{school_id}}/teachers/{{teacher_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "schools",
+                    "{{school_id}}",
+                    "teachers",
+                    "{{teacher_id}}"
+                  ]
+                }
               },
               "status": "No Content",
               "code": 204,
@@ -1126,13 +2625,45 @@
     }
   ],
   "variable": [
-    { "key": "base_url",     "value": "http://localhost:8080", "type": "string" },
-    { "key": "access_token", "value": "",                     "type": "string" },
-    { "key": "refresh_token","value": "",                     "type": "string" },
-    { "key": "school_id",    "value": "sch_001",              "type": "string" },
-    { "key": "class_id",     "value": "cls_001",              "type": "string" },
-    { "key": "plan_id",      "value": "plan_001",             "type": "string" },
-    { "key": "building_id",  "value": "bld_001",              "type": "string" },
-    { "key": "teacher_id",   "value": "tch_001",              "type": "string" }
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "school_id",
+      "value": "sch_001",
+      "type": "string"
+    },
+    {
+      "key": "class_id",
+      "value": "cls_001",
+      "type": "string"
+    },
+    {
+      "key": "plan_id",
+      "value": "plan_001",
+      "type": "string"
+    },
+    {
+      "key": "building_id",
+      "value": "bld_001",
+      "type": "string"
+    },
+    {
+      "key": "teacher_id",
+      "value": "tch_001",
+      "type": "string"
+    }
   ]
 }

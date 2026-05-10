@@ -8,7 +8,7 @@
 User enters username/email + password
         |
         v
-POST /api/v1/auth/login
+POST /api/v1/admin/auth/login
         |
    +---------+
    | success |---> return access_token + refresh_token
@@ -18,13 +18,13 @@ POST /api/v1/auth/login
 
 ## Endpoints
 
-- [POST `/api/v1/auth/login`](#1-login) — Authenticate with username/email and password
-- [POST `/api/v1/auth/refresh`](#2-refresh-token) — Issue a new access token using a valid refresh token
+- [POST `/api/v1/admin/auth/login`](#1-login) — Authenticate with username/email and password
+- [POST `/api/v1/admin/auth/refresh`](#2-refresh-token) — Issue a new access token using a valid refresh token
 
 ---
 
 ### 1. Login
-**POST** `/api/v1/auth/login`
+**POST** `/api/v1/admin/auth/login`
 
 **Headers**
 
@@ -96,7 +96,7 @@ POST /api/v1/auth/login
 ---
 
 ### 2. Refresh Token
-**POST** `/api/v1/auth/refresh`
+**POST** `/api/v1/admin/auth/refresh`
 
 Exchange a valid refresh token for a new access token. Call this when the access token has expired (client receives `401 UNAUTHORIZED`) rather than forcing the user to log in again.
 

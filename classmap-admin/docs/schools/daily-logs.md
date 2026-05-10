@@ -8,17 +8,17 @@
 Admin opens Daily Logs tab
         |
         v
-GET /api/v1/schools/{id}/daily-logs   <-- paginated activity log
+GET /api/v1/admin/schools/{id}/daily-logs   <-- paginated activity log
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}/daily-logs`](#1-list-daily-logs) — Paginated list of activity logs for the school
+- [GET `/api/v1/admin/schools/{id}/daily-logs`](#1-list-daily-logs) — Paginated list of activity logs for the school
 
 ---
 
 ### 1. List Daily Logs
-**GET** `/api/v1/schools/{id}/daily-logs`
+**GET** `/api/v1/admin/schools/{id}/daily-logs`
 
 **Headers**
 

@@ -8,28 +8,28 @@
 Admin opens Infrastructure tab
         |
         v
-GET /api/v1/schools/{id}/infrastructure    <-- building list + facility counts + related plans
+GET /api/v1/admin/schools/{id}/infrastructure    <-- building list + facility counts + related plans
         |
 Admin selects a building type (dropdown: School, etc.)
         |
         v
-GET /api/v1/schools/{id}/infrastructure?building_type=school
+GET /api/v1/admin/schools/{id}/infrastructure?building_type=school
         |
 Admin clicks "Manage Facility"
         |
         v
-PATCH /api/v1/schools/{id}/infrastructure/{building_id}
+PATCH /api/v1/admin/schools/{id}/infrastructure/{building_id}
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}/infrastructure`](#1-get-school-infrastructure) — Buildings, facility counts, and related plans
-- [PATCH `/api/v1/schools/{id}/infrastructure/{building_id}`](#2-update-building-facility) — Update facility counts for a building
+- [GET `/api/v1/admin/schools/{id}/infrastructure`](#1-get-school-infrastructure) — Buildings, facility counts, and related plans
+- [PATCH `/api/v1/admin/schools/{id}/infrastructure/{building_id}`](#2-update-building-facility) — Update facility counts for a building
 
 ---
 
 ### 1. Get School Infrastructure
-**GET** `/api/v1/schools/{id}/infrastructure`
+**GET** `/api/v1/admin/schools/{id}/infrastructure`
 
 **Headers**
 
@@ -119,7 +119,7 @@ PATCH /api/v1/schools/{id}/infrastructure/{building_id}
 ---
 
 ### 2. Update Building Facility
-**PATCH** `/api/v1/schools/{id}/infrastructure/{building_id}`
+**PATCH** `/api/v1/admin/schools/{id}/infrastructure/{building_id}`
 
 **Headers**
 

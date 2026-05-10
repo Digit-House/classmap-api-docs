@@ -9,27 +9,27 @@
 Admin clicks school from list
         |
         v
-GET /api/v1/schools/{id}           <-- General tab (default)
+GET /api/v1/admin/schools/{id}           <-- General tab (default)
         |
         v
-GET /api/v1/schools/{id}/analytics <-- Analytics tab
+GET /api/v1/admin/schools/{id}/analytics <-- Analytics tab
         |
 Admin clicks "Edit Profile"
         |
         v
-PATCH /api/v1/schools/{id}         <-- Save school profile changes
+PATCH /api/v1/admin/schools/{id}         <-- Save school profile changes
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}`](#1-get-school-detail) — Full school profile (General tab)
-- [GET `/api/v1/schools/{id}/analytics`](#2-get-school-analytics) — Analytics charts and stats
-- [PATCH `/api/v1/schools/{id}`](#3-update-school-profile) — Update school profile
+- [GET `/api/v1/admin/schools/{id}`](#1-get-school-detail) — Full school profile (General tab)
+- [GET `/api/v1/admin/schools/{id}/analytics`](#2-get-school-analytics) — Analytics charts and stats
+- [PATCH `/api/v1/admin/schools/{id}`](#3-update-school-profile) — Update school profile
 
 ---
 
 ### 1. Get School Detail
-**GET** `/api/v1/schools/{id}`
+**GET** `/api/v1/admin/schools/{id}`
 
 **Headers**
 
@@ -113,7 +113,7 @@ PATCH /api/v1/schools/{id}         <-- Save school profile changes
 ---
 
 ### 2. Get School Analytics
-**GET** `/api/v1/schools/{id}/analytics`
+**GET** `/api/v1/admin/schools/{id}/analytics`
 
 **Headers**
 
@@ -185,7 +185,7 @@ PATCH /api/v1/schools/{id}         <-- Save school profile changes
 ---
 
 ### 3. Update School Profile
-**PATCH** `/api/v1/schools/{id}`
+**PATCH** `/api/v1/admin/schools/{id}`
 
 **Headers**
 

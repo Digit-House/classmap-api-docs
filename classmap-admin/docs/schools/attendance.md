@@ -8,22 +8,22 @@
 Admin opens Daily Attendance tab
         |
         v
-GET /api/v1/schools/{id}/attendance   <-- default list (no filters)
+GET /api/v1/admin/schools/{id}/attendance   <-- default list (no filters)
         |
 Admin applies filters (teacher name, class time, education level, date range)
         |
         v
-GET /api/v1/schools/{id}/attendance?teacher_name=...&from_date=...  <-- filtered
+GET /api/v1/admin/schools/{id}/attendance?teacher_name=...&from_date=...  <-- filtered
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}/attendance`](#1-list-school-daily-attendance) — Paginated attendance logs with optional filters
+- [GET `/api/v1/admin/schools/{id}/attendance`](#1-list-school-daily-attendance) — Paginated attendance logs with optional filters
 
 ---
 
 ### 1. List School Daily Attendance
-**GET** `/api/v1/schools/{id}/attendance`
+**GET** `/api/v1/admin/schools/{id}/attendance`
 
 **Headers**
 

@@ -19,22 +19,22 @@
 
 ## Endpoints
 
-- [GET `/api/v1/school-systems`](#1-list-school-systems) — List available school systems
-- [GET `/api/v1/unesco-partners`](#2-list-unesco-partners) — List UNESCO partners
-- [GET `/api/v1/locations/states`](#3-list-states) — List states
-- [GET `/api/v1/locations/districts`](#4-list-districts) — List districts by state
-- [GET `/api/v1/locations/townships`](#5-list-townships) — List townships by district
-- [GET `/api/v1/locations/postcodes`](#6-list-postcodes) — List postcodes by township
-- [POST `/api/v1/school-registrations`](#7-create-school-registration) — Step 1: Submit school info
-- [PUT `/api/v1/school-registrations/{id}/documents`](#8-upload-documents) — Step 2: Upload proof documents
-- [PUT `/api/v1/school-registrations/{id}/admin-account`](#9-setup-admin-account) — Step 3: Setup first teacher account
-- [GET `/api/v1/school-registrations/{id}`](#10-get-registration-preview) — Step 4: Preview all data
-- [POST `/api/v1/school-registrations/{id}/submit`](#11-submit-registration) — Final submission for review
+- [GET `/api/v1/mobile/school-systems`](#1-list-school-systems) — List available school systems
+- [GET `/api/v1/mobile/unesco-partners`](#2-list-unesco-partners) — List UNESCO partners
+- [GET `/api/v1/mobile/locations/states`](#3-list-states) — List states
+- [GET `/api/v1/mobile/locations/districts`](#4-list-districts) — List districts by state
+- [GET `/api/v1/mobile/locations/townships`](#5-list-townships) — List townships by district
+- [GET `/api/v1/mobile/locations/postcodes`](#6-list-postcodes) — List postcodes by township
+- [POST `/api/v1/mobile/school-registrations`](#7-create-school-registration) — Step 1: Submit school info
+- [PUT `/api/v1/mobile/school-registrations/{id}/documents`](#8-upload-documents) — Step 2: Upload proof documents
+- [PUT `/api/v1/mobile/school-registrations/{id}/admin-account`](#9-setup-admin-account) — Step 3: Setup first teacher account
+- [GET `/api/v1/mobile/school-registrations/{id}`](#10-get-registration-preview) — Step 4: Preview all data
+- [POST `/api/v1/mobile/school-registrations/{id}/submit`](#11-submit-registration) — Final submission for review
 
 ---
 
 ### 1. List School Systems
-**GET** `/api/v1/school-systems`
+**GET** `/api/v1/mobile/school-systems`
 
 Fetch all available school systems for the dropdown.
 
@@ -64,7 +64,7 @@ Fetch all available school systems for the dropdown.
 ---
 
 ### 2. List UNESCO Partners
-**GET** `/api/v1/unesco-partners`
+**GET** `/api/v1/mobile/unesco-partners`
 
 Fetch all UNESCO partners for the optional dropdown.
 
@@ -93,7 +93,7 @@ Fetch all UNESCO partners for the optional dropdown.
 ---
 
 ### 3. List States
-**GET** `/api/v1/locations/states`
+**GET** `/api/v1/mobile/locations/states`
 
 Fetch all states for the location dropdown.
 
@@ -122,7 +122,7 @@ Fetch all states for the location dropdown.
 ---
 
 ### 4. List Districts
-**GET** `/api/v1/locations/districts?state_id={state_id}`
+**GET** `/api/v1/mobile/locations/districts?state_id={state_id}`
 
 Fetch districts filtered by state.
 
@@ -149,7 +149,7 @@ Fetch districts filtered by state.
 ---
 
 ### 5. List Townships
-**GET** `/api/v1/locations/townships?district_id={district_id}`
+**GET** `/api/v1/mobile/locations/townships?district_id={district_id}`
 
 Fetch townships filtered by district.
 
@@ -176,7 +176,7 @@ Fetch townships filtered by district.
 ---
 
 ### 6. List Postcodes
-**GET** `/api/v1/locations/postcodes?township_id={township_id}`
+**GET** `/api/v1/mobile/locations/postcodes?township_id={township_id}`
 
 Fetch postcodes filtered by township.
 
@@ -203,7 +203,7 @@ Fetch postcodes filtered by township.
 ---
 
 ### 7. Create School Registration
-**POST** `/api/v1/school-registrations`
+**POST** `/api/v1/mobile/school-registrations`
 
 Step 1: Submit school information and create a registration draft.
 
@@ -279,7 +279,7 @@ Step 1: Submit school information and create a registration draft.
 ---
 
 ### 8. Upload Documents
-**PUT** `/api/v1/school-registrations/{id}/documents`
+**PUT** `/api/v1/mobile/school-registrations/{id}/documents`
 
 Step 2: Upload proof of document photos and notes. Uses `multipart/form-data`.
 
@@ -357,7 +357,7 @@ Step 2: Upload proof of document photos and notes. Uses `multipart/form-data`.
 ---
 
 ### 9. Setup Admin Account
-**PUT** `/api/v1/school-registrations/{id}/admin-account`
+**PUT** `/api/v1/mobile/school-registrations/{id}/admin-account`
 
 Step 3: Create the first teacher/admin account for the school.
 
@@ -426,7 +426,7 @@ Step 3: Create the first teacher/admin account for the school.
 ---
 
 ### 10. Get Registration Preview
-**GET** `/api/v1/school-registrations/{id}`
+**GET** `/api/v1/mobile/school-registrations/{id}`
 
 Step 4: Retrieve the full registration data for preview before submission.
 
@@ -484,7 +484,7 @@ Step 4: Retrieve the full registration data for preview before submission.
 ---
 
 ### 11. Submit Registration
-**POST** `/api/v1/school-registrations/{id}/submit`
+**POST** `/api/v1/mobile/school-registrations/{id}/submit`
 
 Final submission. Status changes to `pending_review`. An SMS notification will be sent once approved.
 

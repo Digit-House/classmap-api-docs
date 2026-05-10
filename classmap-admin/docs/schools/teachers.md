@@ -11,43 +11,43 @@
 Admin opens Teachers tab
         |
         v
-GET /api/v1/schools/{id}/teachers          <-- card list of teachers
+GET /api/v1/admin/schools/{id}/teachers          <-- card list of teachers
 
 Admin clicks a teacher card
         |
         v
-GET /api/v1/schools/{id}/teachers/{teacher_id}   <-- teacher detail
+GET /api/v1/admin/schools/{id}/teachers/{teacher_id}   <-- teacher detail
 
         +---> "Change Information" button
         |              |
         |              v
-        |     PATCH /api/v1/schools/{id}/teachers/{teacher_id}  (Save)
+        |     PATCH /api/v1/admin/schools/{id}/teachers/{teacher_id}  (Save)
         |
         +---> "Deactivate Teacher" button
         |              |
         |              v
-        |     PATCH /api/v1/schools/{id}/teachers/{teacher_id}/deactivate
+        |     PATCH /api/v1/admin/schools/{id}/teachers/{teacher_id}/deactivate
         |
         +---> "Cancel Principle" button
                        |
                        v
-             PATCH /api/v1/schools/{id}/teachers/{teacher_id}/principle
+             PATCH /api/v1/admin/schools/{id}/teachers/{teacher_id}/principle
              { "is_principal": false }
 ```
 
 ## Endpoints
 
-- [GET `/api/v1/schools/{id}/teachers`](#1-list-teachers) — Teacher card list for a school
-- [GET `/api/v1/schools/{id}/teachers/{teacher_id}`](#2-get-teacher-detail) — Full teacher profile
-- [PATCH `/api/v1/schools/{id}/teachers/{teacher_id}`](#3-update-teacher) — Update teacher information
-- [PATCH `/api/v1/schools/{id}/teachers/{teacher_id}/deactivate`](#4-deactivate-teacher) — Deactivate a teacher account
-- [PATCH `/api/v1/schools/{id}/teachers/{teacher_id}/principle`](#5-toggle-principal-status) — Set or unset principal role
-- [DELETE `/api/v1/schools/{id}/teachers/{teacher_id}`](#6-delete-teacher) — Permanently remove a teacher
+- [GET `/api/v1/admin/schools/{id}/teachers`](#1-list-teachers) — Teacher card list for a school
+- [GET `/api/v1/admin/schools/{id}/teachers/{teacher_id}`](#2-get-teacher-detail) — Full teacher profile
+- [PATCH `/api/v1/admin/schools/{id}/teachers/{teacher_id}`](#3-update-teacher) — Update teacher information
+- [PATCH `/api/v1/admin/schools/{id}/teachers/{teacher_id}/deactivate`](#4-deactivate-teacher) — Deactivate a teacher account
+- [PATCH `/api/v1/admin/schools/{id}/teachers/{teacher_id}/principle`](#5-toggle-principal-status) — Set or unset principal role
+- [DELETE `/api/v1/admin/schools/{id}/teachers/{teacher_id}`](#6-delete-teacher) — Permanently remove a teacher
 
 ---
 
 ### 1. List Teachers
-**GET** `/api/v1/schools/{id}/teachers`
+**GET** `/api/v1/admin/schools/{id}/teachers`
 
 **Headers**
 
@@ -121,7 +121,7 @@ GET /api/v1/schools/{id}/teachers/{teacher_id}   <-- teacher detail
 ---
 
 ### 2. Get Teacher Detail
-**GET** `/api/v1/schools/{id}/teachers/{teacher_id}`
+**GET** `/api/v1/admin/schools/{id}/teachers/{teacher_id}`
 
 **Headers**
 
@@ -182,7 +182,7 @@ GET /api/v1/schools/{id}/teachers/{teacher_id}   <-- teacher detail
 ---
 
 ### 3. Update Teacher
-**PATCH** `/api/v1/schools/{id}/teachers/{teacher_id}`
+**PATCH** `/api/v1/admin/schools/{id}/teachers/{teacher_id}`
 
 **Headers**
 
@@ -268,7 +268,7 @@ GET /api/v1/schools/{id}/teachers/{teacher_id}   <-- teacher detail
 ---
 
 ### 4. Deactivate Teacher
-**PATCH** `/api/v1/schools/{id}/teachers/{teacher_id}/deactivate`
+**PATCH** `/api/v1/admin/schools/{id}/teachers/{teacher_id}/deactivate`
 
 **Headers**
 
@@ -327,7 +327,7 @@ GET /api/v1/schools/{id}/teachers/{teacher_id}   <-- teacher detail
 ---
 
 ### 5. Toggle Principal Status
-**PATCH** `/api/v1/schools/{id}/teachers/{teacher_id}/principle`
+**PATCH** `/api/v1/admin/schools/{id}/teachers/{teacher_id}/principle`
 
 **Headers**
 
@@ -387,7 +387,7 @@ GET /api/v1/schools/{id}/teachers/{teacher_id}   <-- teacher detail
 ---
 
 ### 6. Delete Teacher
-**DELETE** `/api/v1/schools/{id}/teachers/{teacher_id}`
+**DELETE** `/api/v1/admin/schools/{id}/teachers/{teacher_id}`
 
 **Headers**
 
