@@ -41,7 +41,7 @@ jobs:
 
           echo "Importing admin collection..."
           RESPONSE=$(curl -s -w "\n%{http_code}" \
-            -X POST "https://api.apidog.com/v1/projects/${APIDOG_PROJECT_ID}/import-postman-collection" \
+            -X POST "https://api.apidog.com/v1/projects/${APIDOG_PROJECT_ID}/import-postman-collection?moduleId=1253848" \
             -H "Content-Type: application/json" \
             -H "X-Apidog-Api-Version: 2024-03-28" \
             -H "Authorization: Bearer ${APIDOG_ACCESS_TOKEN}" \
@@ -98,7 +98,7 @@ jobs:
 
           echo "Importing mobile collection..."
           RESPONSE=$(curl -s -w "\n%{http_code}" \
-            -X POST "https://api.apidog.com/v1/projects/${APIDOG_PROJECT_ID}/import-postman-collection" \
+            -X POST "https://api.apidog.com/v1/projects/${APIDOG_PROJECT_ID}/import-postman-collection?moduleId=1253754" \
             -H "Content-Type: application/json" \
             -H "X-Apidog-Api-Version: 2024-03-28" \
             -H "Authorization: Bearer ${APIDOG_ACCESS_TOKEN}" \
