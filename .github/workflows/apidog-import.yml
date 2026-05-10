@@ -1,0 +1,125 @@
+name: Import to Apidog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'classmap-admin/classmap-admin.postman_collection.json'
+      - 'classmap-mobile/classmap-mobile.postman_collection.json'
+      - '.github/workflows/apidog-import.yml'
+  workflow_dispatch:
+
+jobs:
+  import-admin:
+    name: Import Admin Collection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Import admin collection to Apidog
+        env:
+          APIDOG_PROJECT_ID: ${{ secrets.APIDOG_PROJECT_ID }}
+          APIDOG_ACCESS_TOKEN: ${{ secrets.APIDOG_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$APIDOG_PROJECT_ID" ] || [ -z "$APIDOG_ACCESS_TOKEN" ]; then
+            echo "::error::APIDOG_PROJECT_ID and APIDOG_ACCESS_TOKEN secrets are required"
+            exit 1
+          fi
+
+          BODY=$(jq -n \
+            --arg input "$(cat classmap-admin/classmap-admin.postman_collection.json)" \
+            '{
+              input: $input,
+              options: {
+                endpointOverwriteBehavior: "OVERWRITE_EXISTING",
+                endpointCaseOverwriteBehavior: "OVERWRITE_EXISTING",
+                updateFolderOfChangedEndpoint: true
+              }
+            }')
+
+          echo "Importing admin collection..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -X POST "https://api.apidog.com/v1/projects/${APIDOG_PROJECT_ID}/import-postman-collection" \
+            -H "Content-Type: application/json" \
+            -H "X-Apidog-Api-Version: 2024-03-28" \
+            -H "Authorization: Bearer ${APIDOG_ACCESS_TOKEN}" \
+            -d "$BODY")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY_JSON=$(echo "$RESPONSE" | sed '$d')
+
+          echo "Response: $BODY_JSON"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::error::Apidog import failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          ERRORS=$(echo "$BODY_JSON" | jq -r '.data.errors | length')
+          if [ "$ERRORS" != "0" ] && [ "$ERRORS" != "null" ]; then
+            echo "::warning::Apidog import completed with $ERRORS errors"
+            echo "$BODY_JSON" | jq '.data.errors'
+          fi
+
+          CREATED=$(echo "$BODY_JSON" | jq -r '.data.counters.endpointCreated // 0')
+          UPDATED=$(echo "$BODY_JSON" | jq -r '.data.counters.endpointUpdated // 0')
+          echo "Admin collection imported: $CREATED created, $UPDATED updated"
+
+  import-mobile:
+    name: Import Mobile Collection
+    runs-on: ubuntu-latest
+    needs: import-admin
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Import mobile collection to Apidog
+        env:
+          APIDOG_PROJECT_ID: ${{ secrets.APIDOG_PROJECT_ID }}
+          APIDOG_ACCESS_TOKEN: ${{ secrets.APIDOG_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$APIDOG_PROJECT_ID" ] || [ -z "$APIDOG_ACCESS_TOKEN" ]; then
+            echo "::error::APIDOG_PROJECT_ID and APIDOG_ACCESS_TOKEN secrets are required"
+            exit 1
+          fi
+
+          BODY=$(jq -n \
+            --arg input "$(cat classmap-mobile/classmap-mobile.postman_collection.json)" \
+            '{
+              input: $input,
+              options: {
+                endpointOverwriteBehavior: "OVERWRITE_EXISTING",
+                endpointCaseOverwriteBehavior: "OVERWRITE_EXISTING",
+                updateFolderOfChangedEndpoint: true
+              }
+            }')
+
+          echo "Importing mobile collection..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -X POST "https://api.apidog.com/v1/projects/${APIDOG_PROJECT_ID}/import-postman-collection" \
+            -H "Content-Type: application/json" \
+            -H "X-Apidog-Api-Version: 2024-03-28" \
+            -H "Authorization: Bearer ${APIDOG_ACCESS_TOKEN}" \
+            -d "$BODY")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY_JSON=$(echo "$RESPONSE" | sed '$d')
+
+          echo "Response: $BODY_JSON"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::error::Apidog import failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          ERRORS=$(echo "$BODY_JSON" | jq -r '.data.errors | length')
+          if [ "$ERRORS" != "0" ] && [ "$ERRORS" != "null" ]; then
+            echo "::warning::Apidog import completed with $ERRORS errors"
+            echo "$BODY_JSON" | jq '.data.errors'
+          fi
+
+          CREATED=$(echo "$BODY_JSON" | jq -r '.data.counters.endpointCreated // 0')
+          UPDATED=$(echo "$BODY_JSON" | jq -r '.data.counters.endpointUpdated // 0')
+          echo "Mobile collection imported: $CREATED created, $UPDATED updated"

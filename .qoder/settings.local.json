@@ -12,7 +12,10 @@
       "Bash(mkdir -p /Users/konyan/Me/development/digithouse/api-docs/docs && \\\\\ncd /Users/konyan/Me/development/digithouse/api-docs/docs && \\\\\nln -s ../classmap-admin/docs admin && \\\\\nln -s ../classmap-mobile/docs mobile && \\\\\nls -la)",
       "Bash(python3 -c \"\nimport os\nfor root, dirs, files in os.walk\\('/Users/konyan/Me/development/digithouse/api-docs/docs', followlinks=True\\):\n    for f in files:\n        if f.endswith\\('.md'\\):\n            print\\(os.path.join\\(root, f\\)\\)\n\" | sort)",
       "Bash(cd /Users/konyan/Me/development/digithouse/api-docs && git status --short)",
-      "Bash(rm -f /Users/konyan/Me/development/digithouse/api-docs/docs/admin /Users/konyan/Me/development/digithouse/api-docs/docs/mobile /Users/konyan/Me/development/digithouse/api-docs/docs/images /Users/konyan/Me/development/digithouse/api-docs/docs/yoma-api-skill.md && mkdir -p /Users/konyan/Me/development/digithouse/api-docs/docs && ls -la /Users/konyan/Me/development/digithouse/api-docs/docs/)"
+      "Bash(rm -f /Users/konyan/Me/development/digithouse/api-docs/docs/admin /Users/konyan/Me/development/digithouse/api-docs/docs/mobile /Users/konyan/Me/development/digithouse/api-docs/docs/images /Users/konyan/Me/development/digithouse/api-docs/docs/yoma-api-skill.md && mkdir -p /Users/konyan/Me/development/digithouse/api-docs/docs && ls -la /Users/konyan/Me/development/digithouse/api-docs/docs/)",
+      "Bash(ls /Users/konyan/Me/development/digithouse/api-docs/*.json 2>/dev/null || echo \"No JSON files at root\"; ls /Users/konyan/Me/development/digithouse/api-docs/classmap-admin/*.json 2>/dev/null || echo \"No admin JSON\"; ls /Users/konyan/Me/development/digithouse/api-docs/classmap-mobile/*.json 2>/dev/null || echo \"No mobile JSON\")",
+      "WebFetch(openapi.apidog.io)",
+      "WebFetch(docs.apidog.com)"
     ]
   }
 }
