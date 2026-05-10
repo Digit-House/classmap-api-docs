@@ -1,0 +1,930 @@
+{
+  "info": {
+    "name": "Classmap Mobile API",
+    "description": "Auto-rebuilt from all docs under classmap-mobile/docs/. Covers: login, school-register, teacher-register.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth / Login",
+      "item": [
+        {
+          "name": "Request OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"+959123456789\",\n  \"purpose\": \"login\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/otp/request",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "otp", "request"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – OTP Sent",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+959123456789\",\n  \"purpose\": \"login\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/otp/request",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "auth", "otp", "request"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"ref_code\": \"F2aR4\",\n    \"expires_in\": 300,\n    \"retry_after\": 299\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"OTP sent successfully\"\n}",
+              "cookie": []
+            },
+            {
+              "name": "429 – Rate Limited",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+959123456789\",\n  \"purpose\": \"login\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/otp/request",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "auth", "otp", "request"]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": false,\n  \"data\": null,\n  \"meta\": null,\n  \"error\": {\n    \"code\": \"OTP_RATE_LIMIT\",\n    \"details\": \"Please wait 4:59 before requesting a new code\"\n  },\n  \"message\": \"Too many OTP requests\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"+959123456789\",\n  \"otp_code\": \"123861\",\n  \"ref_code\": \"F2aR4\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/otp/verify",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "otp", "verify"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – New User",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+959123456789\",\n  \"otp_code\": \"123861\",\n  \"ref_code\": \"F2aR4\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/otp/verify",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "auth", "otp", "verify"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"temp_token\": \"eyJhbGciOiJIUzI1NiIs...\",\n    \"is_new_user\": true,\n    \"expires_in\": 900\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Phone verified. Please set up your PIN.\"\n}",
+              "cookie": []
+            },
+            {
+              "name": "200 – Existing User",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+959123456789\",\n  \"otp_code\": \"123861\",\n  \"ref_code\": \"F2aR4\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/otp/verify",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "auth", "otp", "verify"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIs...\",\n    \"refresh_token\": \"eyJhbGciOiJIUzI1NiIs...\",\n    \"expires_in\": 3600,\n    \"is_new_user\": false\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Login successful\"\n}",
+              "cookie": []
+            },
+            {
+              "name": "400 – Invalid OTP",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+959123456789\",\n  \"otp_code\": \"111111\",\n  \"ref_code\": \"F2aR4\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/otp/verify",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "auth", "otp", "verify"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": false,\n  \"data\": null,\n  \"meta\": null,\n  \"error\": {\n    \"code\": \"INVALID_OTP\",\n    \"details\": \"The code is incorrect. Please try again.\"\n  },\n  \"message\": \"Invalid OTP\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Setup PIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{temp_token}}" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pin\": \"123456\",\n  \"enable_biometric\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/pin/setup",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "pin", "setup"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – PIN Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{temp_token}}" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pin\": \"123456\",\n  \"enable_biometric\": true\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/pin/setup",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "auth", "pin", "setup"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIs...\",\n    \"refresh_token\": \"eyJhbGciOiJIUzI1NiIs...\",\n    \"expires_in\": 3600,\n    \"biometric_enabled\": true\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"PIN created successfully\"\n}",
+              "cookie": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "School / Registration",
+      "item": [
+        {
+          "name": "List School Systems",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/school-systems",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "school-systems"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – School Systems",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/school-systems",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "school-systems"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"gov\", \"name\": \"Government School\" },\n    { \"id\": \"private\", \"name\": \"Private School\" },\n    { \"id\": \"international\", \"name\": \"International School\" }\n  ],\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"School systems retrieved\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "List UNESCO Partners",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/unesco-partners",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "unesco-partners"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – UNESCO Partners",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/unesco-partners",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "unesco-partners"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"rise\", \"name\": \"Rural Indigenous Sustainable Education\" },\n    { \"id\": \"unesco_mm\", \"name\": \"UNESCO Myanmar\" }\n  ],\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"UNESCO partners retrieved\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "List States",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/locations/states",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "locations", "states"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – States",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/locations/states",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "locations", "states"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"ygn\", \"name\": \"Yangon\" },\n    { \"id\": \"mdy\", \"name\": \"Mandalay\" }\n  ],\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"States retrieved\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "List Districts",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/locations/districts?state_id={{state_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "locations", "districts"],
+              "query": [{ "key": "state_id", "value": "{{state_id}}" }]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Districts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/locations/districts?state_id=ygn",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "locations", "districts"],
+                  "query": [{ "key": "state_id", "value": "ygn" }]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"ygn_01\", \"name\": \"Yangon\", \"state_id\": \"ygn\" }\n  ],\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Districts retrieved\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "List Townships",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/locations/townships?district_id={{district_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "locations", "townships"],
+              "query": [{ "key": "district_id", "value": "{{district_id}}" }]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Townships",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/locations/townships?district_id=ygn_01",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "locations", "townships"],
+                  "query": [{ "key": "district_id", "value": "ygn_01" }]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"kamayut\", \"name\": \"Kamayut\", \"district_id\": \"ygn_01\" }\n  ],\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Townships retrieved\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "List Postcodes",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/locations/postcodes?township_id={{township_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "locations", "postcodes"],
+              "query": [{ "key": "township_id", "value": "{{township_id}}" }]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Postcodes",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/locations/postcodes?township_id=kamayut",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "locations", "postcodes"],
+                  "query": [{ "key": "township_id", "value": "kamayut" }]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"100293\", \"code\": \"100293\", \"township_id\": \"kamayut\" }\n  ],\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Postcodes retrieved\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Create School Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"school_system_id\": \"gov\",\n  \"unesco_partner_id\": \"rise\",\n  \"full_name_en\": \"Basic Education High School No. 2 Kamayut\",\n  \"full_name_mm\": \"အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်\",\n  \"abbreviation_en\": \"Kamayut 2\",\n  \"abbreviation_mm\": \"ကမာရွတ်(၂)\",\n  \"state_id\": \"ygn\",\n  \"district_id\": \"ygn_01\",\n  \"township_id\": \"kamayut\",\n  \"postcode_id\": \"100293\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/school-registrations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "school-registrations"]
+            }
+          },
+          "response": [
+            {
+              "name": "201 – Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"school_system_id\": \"gov\",\n  \"unesco_partner_id\": \"rise\",\n  \"full_name_en\": \"Basic Education High School No. 2 Kamayut\",\n  \"full_name_mm\": \"အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်\",\n  \"abbreviation_en\": \"Kamayut 2\",\n  \"abbreviation_mm\": \"ကမာရွတ်(၂)\",\n  \"state_id\": \"ygn\",\n  \"district_id\": \"ygn_01\",\n  \"township_id\": \"kamayut\",\n  \"postcode_id\": \"100293\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/school-registrations",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "school-registrations"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"sch_reg_001\",\n    \"status\": \"draft\",\n    \"current_step\": 1,\n    \"created_at\": \"2026-05-10T06:30:00Z\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"School registration created\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Upload Documents",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "multipart/form-data" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "photos", "type": "file", "src": "" },
+                { "key": "notes", "value": "This is an example notes.", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}/documents",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "school-registrations", "{{school_registration_id}}", "documents"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Uploaded",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "multipart/form-data" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "photos", "type": "file", "src": "" },
+                    { "key": "notes", "value": "This is an example notes.", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}/documents",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "school-registrations", "{{school_registration_id}}", "documents"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"sch_reg_001\",\n    \"status\": \"draft\",\n    \"current_step\": 2,\n    \"documents\": [\n      { \"id\": \"doc_1\", \"url\": \"https://cdn.example.com/doc_1.jpg\" },\n      { \"id\": \"doc_2\", \"url\": \"https://cdn.example.com/doc_2.jpg\" }\n    ],\n    \"notes\": \"This is an example notes.\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Documents uploaded\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Setup Admin Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayed_name\": \"Daw Mya Mya\",\n  \"phone_number\": \"+959123456789\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}/admin-account",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "school-registrations", "{{school_registration_id}}", "admin-account"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Configured",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayed_name\": \"Daw Mya Mya\",\n  \"phone_number\": \"+959123456789\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}/admin-account",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "school-registrations", "{{school_registration_id}}", "admin-account"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"sch_reg_001\",\n    \"status\": \"draft\",\n    \"current_step\": 3,\n    \"admin_account\": {\n      \"displayed_name\": \"Daw Mya Mya\",\n      \"phone_number\": \"+959123456789\"\n    }\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Admin account configured\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Get Registration Preview",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "school-registrations", "{{school_registration_id}}"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Preview",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "school-registrations", "{{school_registration_id}}"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"sch_reg_001\",\n    \"status\": \"draft\",\n    \"current_step\": 4,\n    \"school_info\": {\n      \"school_system\": \"Government School\",\n      \"unesco_partner\": \"Rural Indigenous Sustainable Education\",\n      \"full_name_en\": \"Basic Education High School No. 2 Kamayut\",\n      \"full_name_mm\": \"အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်\",\n      \"abbreviation_en\": \"Kamayut 2\",\n      \"abbreviation_mm\": \"ကမာရွတ်(၂)\",\n      \"state\": \"Yangon\",\n      \"district\": \"Yangon\",\n      \"township\": \"Kamayut\",\n      \"postcode\": \"100293\"\n    },\n    \"documents\": {\n      \"photos\": [\n        { \"id\": \"doc_1\", \"url\": \"https://cdn.example.com/doc_1.jpg\" }\n      ],\n      \"notes\": \"This is an example notes.\"\n    },\n    \"admin_account\": {\n      \"displayed_name\": \"Daw Mya Mya\",\n      \"phone_number\": \"+959123456789\"\n    }\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Registration preview loaded\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Submit Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}/submit",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "school-registrations", "{{school_registration_id}}", "submit"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Submitted",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/school-registrations/{{school_registration_id}}/submit",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "school-registrations", "{{school_registration_id}}", "submit"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"sch_reg_001\",\n    \"status\": \"pending_review\",\n    \"submitted_at\": \"2026-05-10T07:00:00Z\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Registration submitted for review\"\n}",
+              "cookie": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Teacher / Registration",
+      "item": [
+        {
+          "name": "Lookup School by Code",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/schools/lookup?code={{school_code}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "schools", "lookup"],
+              "query": [{ "key": "code", "value": "{{school_code}}" }]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – School Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/schools/lookup?code=SCH001",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "schools", "lookup"],
+                  "query": [{ "key": "code", "value": "SCH001" }]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"sch_001\",\n    \"code\": \"SCH001\",\n    \"name_en\": \"Basic Education High School No. 2 Kamayut\",\n    \"name_mm\": \"အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်\",\n    \"status\": \"active\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"School found\"\n}",
+              "cookie": []
+            },
+            {
+              "name": "404 – Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/schools/lookup?code=SCH0001",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "schools", "lookup"],
+                  "query": [{ "key": "code", "value": "SCH0001" }]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": false,\n  \"data\": null,\n  \"meta\": null,\n  \"error\": {\n    \"code\": \"SCHOOL_CODE_NOT_FOUND\",\n    \"details\": \"This school code is not recognized. Please check and try again.\"\n  },\n  \"message\": \"School code not found\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Create Teacher Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"school_code\": \"SCH001\",\n  \"displayed_name\": \"U Aung Kyaw\",\n  \"phone_number\": \"+959123456789\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/teacher-registrations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "teacher-registrations"]
+            }
+          },
+          "response": [
+            {
+              "name": "201 – Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"school_code\": \"SCH001\",\n  \"displayed_name\": \"U Aung Kyaw\",\n  \"phone_number\": \"+959123456789\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/teacher-registrations",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "teacher-registrations"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"tch_reg_001\",\n    \"school_id\": \"sch_001\",\n    \"school_name\": \"Basic Education High School No. 2 Kamayut\",\n    \"displayed_name\": \"U Aung Kyaw\",\n    \"phone_number\": \"+959123456789\",\n    \"status\": \"draft\",\n    \"created_at\": \"2026-05-10T06:30:00Z\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Teacher registration created\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Request OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/teacher-registrations/{{teacher_registration_id}}/otp/request",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "teacher-registrations", "{{teacher_registration_id}}", "otp", "request"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – OTP Sent",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/teacher-registrations/{{teacher_registration_id}}/otp/request",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "teacher-registrations", "{{teacher_registration_id}}", "otp", "request"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"ref_code\": \"F2aR4\",\n    \"expires_in\": 300,\n    \"retry_after\": 299\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"OTP sent successfully\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"otp_code\": \"123861\",\n  \"ref_code\": \"F2aR4\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/teacher-registrations/{{teacher_registration_id}}/otp/verify",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "teacher-registrations", "{{teacher_registration_id}}", "otp", "verify"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Verified",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"otp_code\": \"123861\",\n  \"ref_code\": \"F2aR4\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/teacher-registrations/{{teacher_registration_id}}/otp/verify",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "teacher-registrations", "{{teacher_registration_id}}", "otp", "verify"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"tch_reg_001\",\n    \"phone_verified\": true,\n    \"status\": \"phone_verified\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Phone verified successfully\"\n}",
+              "cookie": []
+            }
+          ]
+        },
+        {
+          "name": "Submit Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Request-ID", "value": "{{$guid}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/teacher-registrations/{{teacher_registration_id}}/submit",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "teacher-registrations", "{{teacher_registration_id}}", "submit"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 – Submitted",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "X-Request-ID", "value": "{{$guid}}" }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/teacher-registrations/{{teacher_registration_id}}/submit",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "v1", "teacher-registrations", "{{teacher_registration_id}}", "submit"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"tch_reg_001\",\n    \"status\": \"pending_review\",\n    \"submitted_at\": \"2026-05-10T07:00:00Z\"\n  },\n  \"meta\": null,\n  \"error\": null,\n  \"message\": \"Registration submitted for review\"\n}",
+              "cookie": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8080", "type": "string" },
+    { "key": "access_token", "value": "", "type": "string" },
+    { "key": "refresh_token", "value": "", "type": "string" },
+    { "key": "temp_token", "value": "", "type": "string" },
+    { "key": "school_registration_id", "value": "sch_reg_001", "type": "string" },
+    { "key": "teacher_registration_id", "value": "tch_reg_001", "type": "string" },
+    { "key": "school_id", "value": "sch_001", "type": "string" },
+    { "key": "school_code", "value": "SCH001", "type": "string" },
+    { "key": "state_id", "value": "ygn", "type": "string" },
+    { "key": "district_id", "value": "ygn_01", "type": "string" },
+    { "key": "township_id", "value": "kamayut", "type": "string" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /Users/konyan/Me/development/digithouse/api-docs/.qoder/agents && ls -la /Users/konyan/Me/development/digithouse/api-docs/.qoder/agents)",
+      "Bash(ls -la /Users/konyan/Me/development/digithouse/api-docs/classmap-mobile/images 2>/dev/null || echo \"NOT FOUND\"; ls -la classmap-mobile/images 2>/dev/null || echo \"RELATIVE NOT FOUND\")",
+      "Bash(ls:*)",
+      "Bash(ls -la /Users/konyan/Me/development/digithouse/api-docs/classmap-mobile/docs 2>/dev/null || echo \"docs dir not yet created\"; ls -la /Users/konyan/Me/development/digithouse/api-docs/classmap-mobile/*.json 2>/dev/null || echo \"no json yet\")",
+      "Bash(find /Users/konyan/Me/development/digithouse/api-docs/classmap-mobile/images -type f | sort)",
+      "Bash(ls -la /Users/konyan/Me/development/digithouse/api-docs/.github/workflows/ 2>/dev/null || echo \"No workflows dir\"; ls -la /Users/konyan/Me/development/digithouse/api-docs/)",
+      "Bash(find /Users/konyan/Me/development/digithouse/api-docs -name \"*.md\" -not -path \"*/.*\" -not -path \"*/site/*\" | sort)",
+      "Bash(ls /Users/konyan/Me/development/digithouse/api-docs/classmap-admin.postman_collection.json 2>/dev/null && echo \"EXISTS\" || echo \"NOT FOUND\"; ls /Users/konyan/Me/development/digithouse/api-docs/site/ 2>/dev/null | head -20)"
+    ]
+  }
+}

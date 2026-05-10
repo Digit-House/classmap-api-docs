@@ -1,7 +1,7 @@
 site_name: Class Map – API Docs
-site_description: REST API reference for the Class Map Education Management System (Admin Portal)
+site_description: REST API reference for the Class Map Education Management System (Admin Portal & Mobile App)
 site_author: Yoma Fleet / Digithouse
-docs_dir: better-admin/docs
+docs_dir: .
 site_dir: site
 
 theme:
@@ -36,7 +36,11 @@ theme:
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
@@ -53,17 +57,26 @@ plugins:
 
 nav:
   - Home: index.md
-  - Auth:
-    - Login & Token Refresh: auth/login.md
-  - Dashboard:
-    - Overview: dashboard/overview.md
-  - Schools:
-    - School List: schools/list.md
-    - General & Analytics: schools/detail.md
-    - Daily Attendance: schools/attendance.md
-    - Classes: schools/classes.md
-    - Plans: schools/plans.md
-    - Infrastructure: schools/infrastructure.md
-    - Gallery: schools/gallery.md
-    - Daily Logs: schools/daily-logs.md
-    - Teachers: schools/teachers.md
+  - Admin Portal:
+    - Overview: classmap-admin/docs/index.md
+    - Auth:
+      - Login & Token Refresh: classmap-admin/docs/auth/login.md
+    - Dashboard:
+      - Overview: classmap-admin/docs/dashboard/overview.md
+    - Schools:
+      - School List: classmap-admin/docs/schools/list.md
+      - General & Analytics: classmap-admin/docs/schools/detail.md
+      - Daily Attendance: classmap-admin/docs/schools/attendance.md
+      - Classes: classmap-admin/docs/schools/classes.md
+      - Plans: classmap-admin/docs/schools/plans.md
+      - Infrastructure: classmap-admin/docs/schools/infrastructure.md
+      - Gallery: classmap-admin/docs/schools/gallery.md
+      - Daily Logs: classmap-admin/docs/schools/daily-logs.md
+      - Teachers: classmap-admin/docs/schools/teachers.md
+  - Mobile App:
+    - Overview: classmap-mobile/docs/index.md
+    - Login & Authentication: classmap-mobile/docs/login.md
+    - School Registration: classmap-mobile/docs/school-register.md
+    - Teacher Registration: classmap-mobile/docs/teacher-register.md
+  - Reference:
+    - Backend Rules: yoma-api-skill.md
