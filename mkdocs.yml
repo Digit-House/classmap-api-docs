@@ -1,7 +1,7 @@
 site_name: Class Map – API Docs
 site_description: REST API reference for the Class Map Education Management System (Admin Portal & Mobile App)
 site_author: Yoma Fleet / Digithouse
-docs_dir: .
+docs_dir: docs
 site_dir: site
 
 theme:
@@ -58,25 +58,25 @@ plugins:
 nav:
   - Home: index.md
   - Admin Portal:
-    - Overview: classmap-admin/docs/index.md
+    - Overview: admin/index.md
     - Auth:
-      - Login & Token Refresh: classmap-admin/docs/auth/login.md
+      - Login & Token Refresh: admin/auth/login.md
     - Dashboard:
-      - Overview: classmap-admin/docs/dashboard/overview.md
+      - Overview: admin/dashboard/overview.md
     - Schools:
-      - School List: classmap-admin/docs/schools/list.md
-      - General & Analytics: classmap-admin/docs/schools/detail.md
-      - Daily Attendance: classmap-admin/docs/schools/attendance.md
-      - Classes: classmap-admin/docs/schools/classes.md
-      - Plans: classmap-admin/docs/schools/plans.md
-      - Infrastructure: classmap-admin/docs/schools/infrastructure.md
-      - Gallery: classmap-admin/docs/schools/gallery.md
-      - Daily Logs: classmap-admin/docs/schools/daily-logs.md
-      - Teachers: classmap-admin/docs/schools/teachers.md
+      - School List: admin/schools/list.md
+      - General & Analytics: admin/schools/detail.md
+      - Daily Attendance: admin/schools/attendance.md
+      - Classes: admin/schools/classes.md
+      - Plans: admin/schools/plans.md
+      - Infrastructure: admin/schools/infrastructure.md
+      - Gallery: admin/schools/gallery.md
+      - Daily Logs: admin/schools/daily-logs.md
+      - Teachers: admin/schools/teachers.md
   - Mobile App:
-    - Overview: classmap-mobile/docs/index.md
-    - Login & Authentication: classmap-mobile/docs/login.md
-    - School Registration: classmap-mobile/docs/school-register.md
-    - Teacher Registration: classmap-mobile/docs/teacher-register.md
+    - Overview: mobile/index.md
+    - Login & Authentication: mobile/login.md
+    - School Registration: mobile/school-register.md
+    - Teacher Registration: mobile/teacher-register.md
   - Reference:
     - Backend Rules: yoma-api-skill.md

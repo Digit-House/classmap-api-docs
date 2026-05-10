@@ -12,7 +12,7 @@ Welcome to the Class Map API documentation. This site covers both the **Admin Po
 
     Web-based dashboard for school administrators, UNESCO partners, and system operators.
 
-    [View Admin Docs](classmap-admin/docs/index.md)
+    [View Admin Docs](admin/index.md)
 
 -   :material-cellphone:{ .lg .middle } **Mobile App**
 
@@ -20,7 +20,7 @@ Welcome to the Class Map API documentation. This site covers both the **Admin Po
 
     Android & iOS app for school principals and teachers. OTP-based login, school registration, and teacher registration.
 
-    [View Mobile Docs](classmap-mobile/docs/index.md)
+    [View Mobile Docs](mobile/index.md)
 
 </div>
 

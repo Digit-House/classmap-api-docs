@@ -8,7 +8,10 @@
       "Bash(find /Users/konyan/Me/development/digithouse/api-docs/classmap-mobile/images -type f | sort)",
       "Bash(ls -la /Users/konyan/Me/development/digithouse/api-docs/.github/workflows/ 2>/dev/null || echo \"No workflows dir\"; ls -la /Users/konyan/Me/development/digithouse/api-docs/)",
       "Bash(find /Users/konyan/Me/development/digithouse/api-docs -name \"*.md\" -not -path \"*/.*\" -not -path \"*/site/*\" | sort)",
-      "Bash(ls /Users/konyan/Me/development/digithouse/api-docs/classmap-admin.postman_collection.json 2>/dev/null && echo \"EXISTS\" || echo \"NOT FOUND\"; ls /Users/konyan/Me/development/digithouse/api-docs/site/ 2>/dev/null | head -20)"
+      "Bash(ls /Users/konyan/Me/development/digithouse/api-docs/classmap-admin.postman_collection.json 2>/dev/null && echo \"EXISTS\" || echo \"NOT FOUND\"; ls /Users/konyan/Me/development/digithouse/api-docs/site/ 2>/dev/null | head -20)",
+      "Bash(mkdir -p /Users/konyan/Me/development/digithouse/api-docs/docs && \\\\\ncd /Users/konyan/Me/development/digithouse/api-docs/docs && \\\\\nln -s ../classmap-admin/docs admin && \\\\\nln -s ../classmap-mobile/docs mobile && \\\\\nls -la)",
+      "Bash(python3 -c \"\nimport os\nfor root, dirs, files in os.walk\\('/Users/konyan/Me/development/digithouse/api-docs/docs', followlinks=True\\):\n    for f in files:\n        if f.endswith\\('.md'\\):\n            print\\(os.path.join\\(root, f\\)\\)\n\" | sort)",
+      "Bash(cd /Users/konyan/Me/development/digithouse/api-docs && git status --short)"
     ]
   }
 }
