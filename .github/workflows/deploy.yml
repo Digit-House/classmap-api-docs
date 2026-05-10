@@ -25,6 +25,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Prepare docs
+        run: |
+          rm -rf docs/admin docs/mobile docs/images docs/yoma-api-skill.md
+          mkdir -p docs/admin docs/mobile docs/images
+          cp -r classmap-admin/docs/* docs/admin/
+          cp -r classmap-mobile/docs/* docs/mobile/
+          cp -r classmap-mobile/images/* docs/images/
+          cp yoma-api-skill.md docs/
+
       - name: Build docs (validate)
         run: mkdocs build --strict
 

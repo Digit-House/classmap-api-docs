@@ -18,19 +18,26 @@
 
 ## Login Flow
 
-```mermaid
-graph TD
-    Start([App Launch]) --> CheckPIN{Has PIN?}
-    CheckPIN -- No --> MobileLogin[Mobile Login UI]
-    MobileLogin --> EnterOTP[Enter OTP]
-    EnterOTP --> VerifyOTP{Verify OTP<br/>Online Required}
-    VerifyOTP -- Invalid --> EnterOTP
-    VerifyOTP -- Valid --> SetPIN[Set PIN]
-    SetPIN --> Home[Home Screen]
-    CheckPIN -- Yes --> PINUI[PIN Login UI]
-    PINUI --> VerifyPIN{Verify PIN<br/>Local Process}
-    VerifyPIN -- Invalid --> PINUI
-    VerifyPIN -- Valid --> Home
+```
+┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐     ┌─────────────┐     ┌──────┐
+│ App Launch  │────▶│ Has PIN?         │────▶│ PIN Login UI    │────▶│ Verify PIN  │────▶│ Home │
+└─────────────┘     │                  │     │                 │     │ (Local)     │     │      │
+                    │ Yes ─────────────┘     └─────────────────┘     └──────┬──────┘     └──────┘
+                    │                                                       │
+                    │ No                                                    │ Invalid
+                    │                                                       │
+                    ▼                                                       ▼
+            ┌──────────────────┐                                    ┌─────────────┐
+            │ Mobile Login UI  │                                    │ PIN Login UI│
+            └──────────────────┘                                    └─────────────┘
+                    │
+                    ▼
+            ┌──────────────────┐     ┌─────────────────┐     ┌─────────────┐
+            │ Enter OTP        │────▶│ Verify OTP      │────▶│ Set PIN     │────▶ Home
+            └──────────────────┘     │ (Online)        │     └─────────────┘
+                    ▲                └──────┬──────────┘
+                    │                       │ Invalid
+                    └───────────────────────┘
 ```
 
 ---

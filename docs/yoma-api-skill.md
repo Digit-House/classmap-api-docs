@@ -1,1 +1,0 @@
-../yoma-api-skill.md
