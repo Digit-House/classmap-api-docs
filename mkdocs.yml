@@ -69,6 +69,8 @@ nav:
       - Gallery: admin/schools/gallery.md
       - Daily Logs: admin/schools/daily-logs.md
       - Teachers: admin/schools/teachers.md
+    - Notifications:
+      - Management: admin/notifications/management.md
   - Mobile App:
     - Overview: mobile/index.md
     - Login & Authentication: mobile/login.md

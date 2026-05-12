@@ -1,11 +1,11 @@
 # Push Notifications – Notifications
 
-![Notification List](../../images/notification/notification-list.png)
-![Create Notification – Send Now](../../images/notification/notification-create.png)
-![Create Notification – Schedule for Later](../../images/notification/notification-create-send-now.png)
-![Notification Detail – Sent](../../images/notification/notification-detail.png)
-![Notification Detail – Scheduled](../../images/notification/notificaiton-schedule-detail.png)
-![Delete Confirmation](../../images/notification/notification-schedule-delete.png)
+![Notification List](../images/notification/notification-list.png)
+![Create Notification – Send Now](../images/notification/notification-create.png)
+![Create Notification – Schedule for Later](../images/notification/notification-create-send-now.png)
+![Notification Detail – Sent](../images/notification/notification-detail.png)
+![Notification Detail – Scheduled](../images/notification/notificaiton-schedule-detail.png)
+![Delete Confirmation](../images/notification/notification-schedule-delete.png)
 
 ## Flow
 
