@@ -19,8 +19,9 @@
 | [Schools – Gallery](schools/gallery.md) | 1 | Photo gallery by category |
 | [Schools – Daily Logs](schools/daily-logs.md) | 1 | Activity audit log |
 | [Schools – Teachers](schools/teachers.md) | 6 | Teacher management and role control |
+| [Notifications – Management](notifications/management.md) | 6 | Push notification CRUD + audiences |
 
-**Total: 30 endpoints**
+**Total: 36 endpoints**
 
 ---
 
