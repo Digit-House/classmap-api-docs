@@ -6,21 +6,22 @@
 
 ## Available APIs
 
-| Module                                                | Endpoints | Description                                    |
-| ----------------------------------------------------- | --------- | ---------------------------------------------- |
-| [Auth](auth/login.md)                                 | 4         | Login, token refresh, profile, sign-out        |
-| [Dashboard](dashboard/overview.md)                    | 2         | Summary stats, daily attendance                |
-| [Schools – List](schools/list.md)                     | 1         | Paginated school list with map data            |
-| [Schools – General & Analytics](schools/detail.md)    | 5         | School profile, analytics, review, delete      |
-| [Schools – Daily Attendance](schools/attendance.md)   | 1         | Attendance logs with filters                   |
-| [Schools – Classes](schools/classes.md)               | 4         | Classroom CRUD and export                      |
-| [Schools – Plans](schools/plans.md)                   | 7         | Plan submission, review, and export            |
-| [Schools – Infrastructure](schools/infrastructure.md) | 2         | Building and facility management               |
-| [Schools – Gallery](schools/gallery.md)               | 1         | Photo gallery by category                      |
-| [Schools – Daily Logs](schools/daily-logs.md)         | 1         | Daily log entries with review status           |
-| [Schools – Teachers](schools/teachers.md)             | 7         | Teacher management, approval, and role control |
+| Module                                                    | Endpoints | Description                                    |
+| --------------------------------------------------------- | --------- | ---------------------------------------------- |
+| [Auth](auth/login.md)                                     | 4         | Login, token refresh, profile, sign-out        |
+| [Dashboard](dashboard/overview.md)                        | 2         | Summary stats, daily attendance                |
+| [Schools – List](schools/list.md)                         | 1         | Paginated school list with map data            |
+| [Schools – General & Analytics](schools/detail.md)        | 5         | School profile, analytics, review, delete      |
+| [Schools – Daily Attendance](schools/attendance.md)       | 1         | Attendance logs with filters                   |
+| [Schools – Classes](schools/classes.md)                   | 4         | Classroom CRUD and export                      |
+| [Schools – Plans](schools/plans.md)                       | 7         | Plan submission, review, and export            |
+| [Schools – Infrastructure](schools/infrastructure.md)     | 2         | Building and facility management               |
+| [Schools – Gallery](schools/gallery.md)                   | 1         | Photo gallery by category                      |
+| [Schools – Daily Logs](schools/daily-logs.md)             | 1         | Daily log entries with review status           |
+| [Schools – Teachers](schools/teachers.md)                 | 7         | Teacher management, approval, and role control |
+| [Notifications – Management](notifications/management.md) | 6         | Push notification CRUD + audiences             |
 
-**Total: 35 endpoints**
+**Total: 41 endpoints**
 
 ---
 
