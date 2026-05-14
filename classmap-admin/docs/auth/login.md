@@ -20,32 +20,33 @@ POST /api/v1/admin/auth/login
 
 - [POST `/api/v1/admin/auth/login`](#1-login) — Authenticate with username/email and password
 - [POST `/api/v1/admin/auth/refresh`](#2-refresh-token) — Issue a new access token using a valid refresh token
+- [GET `/api/v1/admin/auth/me`](#3-get-current-user) — Get current user profile
+- [POST `/api/v1/admin/auth/sign-out`](#4-sign-out) — Revoke current session
 
 ---
 
 ### 1. Login
+
 **POST** `/api/v1/admin/auth/login`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key            | Value              | Required |
+| -------------- | ------------------ | -------- |
+| `Content-Type` | `application/json` | Yes      |
+| `X-Request-ID` | `<uuid>`           | Yes      |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `email` | string | Yes | Username or email address |
-| `password` | string | Yes | User password |
-| `remember_me` | boolean | No | Extend session lifetime |
+| Field             | Type   | Required | Description               |
+| ----------------- | ------ | -------- | ------------------------- |
+| `emailOrUsername` | string | Yes      | Username or email address |
+| `password`        | string | Yes      | User password             |
 
 ```json
 {
-  "email": "taylor@classmap.edu",
-  "password": "secret123",
-  "remember_me": false
+  "emailOrUsername": "taylor@classmap.edu",
+  "password": "secret123"
 }
 ```
 
@@ -55,16 +56,21 @@ POST /api/v1/admin/auth/login
 {
   "success": true,
   "data": {
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "refresh_token": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...",
-    "expires_in": 3600,
-    "token_type": "Bearer",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...",
+    "accessTokenExpiresAt": 1715601600,
+    "refreshTokenExpiresAt": 1716206400,
+    "requirePinSetup": false,
     "user": {
       "id": "usr_001",
-      "display_name": "Taylor",
+      "username": "taylor",
+      "displayedName": "Taylor",
+      "phoneNumber": null,
       "email": "taylor@classmap.edu",
-      "role": "admin"
-    }
+      "status": true,
+      "roles": ["admin"]
+    },
+    "teacher": null
   },
   "meta": null,
   "error": null,
@@ -74,12 +80,12 @@ POST /api/v1/admin/auth/login
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Missing or malformed fields |
-| `401` | `UNAUTHORIZED` | Invalid credentials |
-| `429` | `RATE_LIMIT_EXCEEDED` | Too many login attempts |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description                 |
+| ------ | ----------------------- | --------------------------- |
+| `400`  | `VALIDATION_ERROR`      | Missing or malformed fields |
+| `401`  | `UNAUTHORIZED`          | Invalid credentials         |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Too many login attempts     |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault     |
 
 ```json
 {
@@ -96,26 +102,27 @@ POST /api/v1/admin/auth/login
 ---
 
 ### 2. Refresh Token
+
 **POST** `/api/v1/admin/auth/refresh`
 
 Exchange a valid refresh token for a new access token. Call this when the access token has expired (client receives `401 UNAUTHORIZED`) rather than forcing the user to log in again.
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key            | Value              | Required |
+| -------------- | ------------------ | -------- |
+| `Content-Type` | `application/json` | Yes      |
+| `X-Request-ID` | `<uuid>`           | Yes      |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `refresh_token` | string | Yes | Refresh token issued at login |
+| Field          | Type   | Required | Description                   |
+| -------------- | ------ | -------- | ----------------------------- |
+| `refreshToken` | string | Yes      | Refresh token issued at login |
 
 ```json
 {
-  "refresh_token": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4..."
+  "refreshToken": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4..."
 }
 ```
 
@@ -125,10 +132,21 @@ Exchange a valid refresh token for a new access token. Call this when the access
 {
   "success": true,
   "data": {
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...(new)",
-    "refresh_token": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...(rotated)",
-    "expires_in": 3600,
-    "token_type": "Bearer"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...(new)",
+    "refreshToken": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...(rotated)",
+    "accessTokenExpiresAt": 1715601600,
+    "refreshTokenExpiresAt": 1716206400,
+    "requirePinSetup": false,
+    "user": {
+      "id": "usr_001",
+      "username": "taylor",
+      "displayedName": "Taylor",
+      "phoneNumber": null,
+      "email": "taylor@classmap.edu",
+      "status": true,
+      "roles": ["admin"]
+    },
+    "teacher": null
   },
   "meta": null,
   "error": null,
@@ -138,12 +156,12 @@ Exchange a valid refresh token for a new access token. Call this when the access
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Missing `refresh_token` field |
-| `401` | `UNAUTHORIZED` | Refresh token is invalid or expired |
-| `429` | `RATE_LIMIT_EXCEEDED` | Too many refresh attempts |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description                         |
+| ------ | ----------------------- | ----------------------------------- |
+| `400`  | `VALIDATION_ERROR`      | Missing `refresh_token` field       |
+| `401`  | `UNAUTHORIZED`          | Refresh token is invalid or expired |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Too many refresh attempts           |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault             |
 
 ```json
 {
@@ -157,11 +175,92 @@ Exchange a valid refresh token for a new access token. Call this when the access
 }
 ```
 
+---
+
+### 3. Get Current User
+
+**GET** `/api/v1/admin/auth/me`
+
+Retrieve the current authenticated user profile.
+
+**Headers**
+
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
+
+**Response – 200 OK**
+
+```json
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "usr_001",
+      "username": "taylor",
+      "displayedName": "Taylor",
+      "phoneNumber": null,
+      "email": "taylor@classmap.edu",
+      "status": true,
+      "roles": ["admin"]
+    },
+    "teacher": null
+  },
+  "meta": null,
+  "error": null,
+  "message": "User fetched successfully"
+}
+```
+
+**Response – 4xx / 5xx**
+
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
+
+---
+
+### 4. Sign Out
+
+**POST** `/api/v1/admin/auth/sign-out`
+
+Revoke the current session and invalidate the refresh token.
+
+**Headers**
+
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
+
+**Response – 200 OK**
+
+```json
+{
+  "success": true,
+  "data": "Signed out successfully",
+  "meta": null,
+  "error": null,
+  "message": "Signed out successfully"
+}
+```
+
+**Response – 4xx / 5xx**
+
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
+
 ## Error Codes
 
-| Code | HTTP Status | Description |
-|---|---|---|
-| `VALIDATION_ERROR` | 400 | Missing or malformed request fields |
-| `UNAUTHORIZED` | 401 | Invalid credentials or expired/invalid refresh token |
-| `RATE_LIMIT_EXCEEDED` | 429 | Login or refresh attempts exceeded |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected server error |
+| Code                    | HTTP Status | Description                                          |
+| ----------------------- | ----------- | ---------------------------------------------------- |
+| `VALIDATION_ERROR`      | 400         | Missing or malformed request fields                  |
+| `UNAUTHORIZED`          | 401         | Invalid credentials or expired/invalid refresh token |
+| `RATE_LIMIT_EXCEEDED`   | 429         | Login or refresh attempts exceeded                   |
+| `INTERNAL_SERVER_ERROR` | 500         | Unexpected server error                              |

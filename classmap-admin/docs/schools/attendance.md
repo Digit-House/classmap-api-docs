@@ -23,33 +23,34 @@ GET /api/v1/admin/schools/{id}/attendance?teacher_name=...&from_date=...  <-- fi
 ---
 
 ### 1. List School Daily Attendance
+
 **GET** `/api/v1/admin/schools/{id}/attendance`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `teacher_name` | string | No | Filter by teacher name (partial match) |
-| `class_time` | string | No | Filter by class time slot: `day`, `evening`, `morning` |
-| `education_level` | string | No | Filter by education level |
-| `from_date` | string | No | Start date (ISO 8601: `YYYY-MM-DD`) |
-| `to_date` | string | No | End date (ISO 8601: `YYYY-MM-DD`) |
-| `page` | integer | No | Page number (default: 1) |
-| `per_page` | integer | No | Items per page (default: 10) |
+| Parameter        | Type    | Required | Description                                            |
+| ---------------- | ------- | -------- | ------------------------------------------------------ |
+| `teacherName`    | string  | No       | Filter by teacher name (partial match)                 |
+| `classTime`      | string  | No       | Filter by class time slot: `day`, `evening`, `morning` |
+| `educationLevel` | string  | No       | Filter by education level                              |
+| `fromDate`       | string  | No       | Start date (ISO 8601: `YYYY-MM-DD`)                    |
+| `toDate`         | string  | No       | End date (ISO 8601: `YYYY-MM-DD`)                      |
+| `page`           | integer | No       | Page number (default: 1)                               |
+| `limit`       | integer | No       | Items per page (default: 10)                           |
 
 **Response – 200 OK**
 
@@ -59,45 +60,42 @@ GET /api/v1/admin/schools/{id}/attendance?teacher_name=...&from_date=...  <-- fi
   "data": [
     {
       "id": "att_001",
-      "teacher_name": "Thu Zarkhin",
-      "class_time": "Day School (9:00 AM - 3:00 PM)",
-      "date": "2026-05-05T12:00:00Z",
-      "present_count": {
-        "male": 45,
-        "female": 52,
-        "swd": 8,
-        "total": 105
-      },
-      "absent_count": {
-        "male": 3,
-        "female": 2,
-        "swd": 1,
-        "total": 6
-      }
+      "date": "2026-05-05",
+      "teacherName": "Thu Zarkhin",
+      "classTime": "Day School (9:00 AM - 3:00 PM)",
+      "customClassStartTime": null,
+      "customClassEndTime": null,
+      "isReviewed": true,
+      "note": "Normal attendance day",
+      "maleCount": 45,
+      "femaleCount": 52,
+      "swdCount": 8,
+      "schoolMaleCount": 48,
+      "schoolFemaleCount": 55,
+      "schoolSwdCount": 9
     },
     {
       "id": "att_002",
-      "teacher_name": "Aung Min",
-      "class_time": "Day School (9:00 AM - 3:00 PM)",
-      "date": "2026-06-05T12:00:00Z",
-      "present_count": {
-        "male": 42,
-        "female": 56,
-        "swd": 7,
-        "total": 98
-      },
-      "absent_count": {
-        "male": 4,
-        "female": 3,
-        "swd": 1,
-        "total": 8
-      }
+      "date": "2026-06-05",
+      "teacherName": "Aung Min",
+      "classTime": "Day School (9:00 AM - 3:00 PM)",
+      "customClassStartTime": null,
+      "customClassEndTime": null,
+      "isReviewed": false,
+      "note": null,
+      "maleCount": 42,
+      "femaleCount": 56,
+      "swdCount": 7,
+      "schoolMaleCount": 46,
+      "schoolFemaleCount": 59,
+      "schoolSwdCount": 8
     }
   ],
   "meta": {
     "page": 1,
-    "per_page": 10,
-    "total": 24
+    "limit": 10,
+    "total": 24,
+    "totalPages": 5
   },
   "error": null,
   "message": "Successfully"
@@ -106,22 +104,22 @@ GET /api/v1/admin/schools/{id}/attendance?teacher_name=...&from_date=...  <-- fi
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Invalid query parameters or date format |
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School ID does not exist |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description                             |
+| ------ | ----------------------- | --------------------------------------- |
+| `400`  | `VALIDATION_ERROR`      | Invalid query parameters or date format |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token                |
+| `403`  | `FORBIDDEN`             | Insufficient role                       |
+| `404`  | `SCHOOL_NOT_FOUND`      | School ID does not exist                |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Rate limit exceeded                     |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault                 |
 
 ## Error Codes
 
-| Code | HTTP Status | Description |
-|---|---|---|
-| `VALIDATION_ERROR` | 400 | Invalid query param or date format |
-| `UNAUTHORIZED` | 401 | Missing or invalid token |
-| `FORBIDDEN` | 403 | Insufficient role |
-| `SCHOOL_NOT_FOUND` | 404 | School not found |
-| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected server error |
+| Code                    | HTTP Status | Description                        |
+| ----------------------- | ----------- | ---------------------------------- |
+| `VALIDATION_ERROR`      | 400         | Invalid query param or date format |
+| `UNAUTHORIZED`          | 401         | Missing or invalid token           |
+| `FORBIDDEN`             | 403         | Insufficient role                  |
+| `SCHOOL_NOT_FOUND`      | 404         | School not found                   |
+| `RATE_LIMIT_EXCEEDED`   | 429         | Too many requests                  |
+| `INTERNAL_SERVER_ERROR` | 500         | Unexpected server error            |

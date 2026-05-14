@@ -38,28 +38,29 @@ GET /api/v1/admin/schools/{id}/classes       <-- list all classrooms
 ---
 
 ### 1. List Classrooms
+
 **GET** `/api/v1/admin/schools/{id}/classes`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `page` | integer | No | Page number (default: 1) |
-| `per_page` | integer | No | Items per page (default: 10) |
+| Parameter  | Type    | Required | Description                  |
+| ---------- | ------- | -------- | ---------------------------- |
+| `page`     | integer | No       | Page number (default: 1)     |
+| `limit` | integer | No       | Items per page (default: 10) |
 
 **Response – 200 OK**
 
@@ -69,29 +70,28 @@ GET /api/v1/admin/schools/{id}/classes       <-- list all classrooms
   "data": [
     {
       "id": "cls_001",
-      "classroom_name": "Kindergarten",
-      "grade_level": "Grade 1",
+      "gradeLevel": "Grade 1",
       "section": "A",
+      "academicYear": "2026 - 2027",
+      "courseType": "Long terms",
+      "maleCount": 18,
+      "femaleCount": 15,
+      "swdCount": 2,
+      "schoolMaleCount": 20,
+      "schoolFemaleCount": 18,
+      "schoolSwdCount": 3,
+      "teacherId": "tch_001",
       "teacher": {
         "id": "tch_001",
         "name": "Daw Hla Hla"
-      },
-      "academic_year": "2026 - 2027",
-      "course_type": "Long terms",
-      "start_date": "2026-06-01",
-      "end_date": "2027-02-28",
-      "student_count": {
-        "total": 35,
-        "male": 18,
-        "female": 15,
-        "swd": 2
       }
     }
   ],
   "meta": {
     "page": 1,
-    "per_page": 10,
-    "total": 8
+    "limit": 10,
+    "total": 8,
+    "totalPages": 5
   },
   "error": null,
   "message": "Successfully"
@@ -100,64 +100,63 @@ GET /api/v1/admin/schools/{id}/classes       <-- list all classrooms
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School ID does not exist |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `403`  | `FORBIDDEN`             | Insufficient role        |
+| `404`  | `SCHOOL_NOT_FOUND`      | School ID does not exist |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Rate limit exceeded      |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
 
 ---
 
 ### 2. Create Classroom
+
 **POST** `/api/v1/admin/schools/{id}/classes`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `classroom_name` | string | Yes | Name of the classroom |
-| `grade_level` | string | Yes | Grade level (e.g. `Grade 1`) |
-| `section` | string | Yes | Section identifier (e.g. `A`) |
-| `academic_year` | string | Yes | Academic year (e.g. `2026 - 2027`) |
-| `course_type` | string | Yes | Course type (e.g. `Long terms`) |
-| `start_date` | string | Yes | Course start date (ISO 8601: `YYYY-MM-DD`) |
-| `end_date` | string | Yes | Course end date (ISO 8601: `YYYY-MM-DD`) |
-| `male_count` | integer | Yes | Number of male students |
-| `female_count` | integer | Yes | Number of female students |
-| `swd_count` | integer | Yes | Number of students with disabilities |
-| `teacher_id` | string | Yes | Teacher UUID |
-| `additional_info` | string | No | Notes about students with special needs |
+| Field               | Type    | Required | Description                              |
+| ------------------- | ------- | -------- | ---------------------------------------- |
+| `gradeLevel`        | string  | Yes      | Grade level (e.g. `Grade 1`)             |
+| `section`           | string  | Yes      | Section identifier (e.g. `A`)            |
+| `academicYear`      | string  | Yes      | Academic year (e.g. `2026 - 2027`)       |
+| `courseType`        | string  | Yes      | Course type: `Long terms`, `Short terms` |
+| `maleCount`         | integer | Yes      | Number of male students                  |
+| `femaleCount`       | integer | Yes      | Number of female students                |
+| `swdCount`          | integer | Yes      | Number of students with disabilities     |
+| `schoolMaleCount`   | integer | No       | School-reported male count               |
+| `schoolFemaleCount` | integer | No       | School-reported female count             |
+| `schoolSwdCount`    | integer | No       | School-reported SWD count                |
+| `teacherId`         | string  | Yes      | Teacher UUID                             |
 
 ```json
 {
-  "classroom_name": "Kindergarten",
-  "grade_level": "Grade 1",
+  "gradeLevel": "Grade 1",
   "section": "A",
-  "academic_year": "2026 - 2027",
-  "course_type": "Long terms",
-  "start_date": "2026-06-01",
-  "end_date": "2027-02-28",
-  "male_count": 18,
-  "female_count": 15,
-  "swd_count": 2,
-  "teacher_id": "tch_001",
-  "additional_info": "Two students require additional reading support."
+  "academicYear": "2026 - 2027",
+  "courseType": "Long terms",
+  "maleCount": 18,
+  "femaleCount": 15,
+  "swdCount": 2,
+  "schoolMaleCount": 20,
+  "schoolFemaleCount": 18,
+  "schoolSwdCount": 3,
+  "teacherId": "tch_001"
 }
 ```
 
@@ -168,14 +167,17 @@ GET /api/v1/admin/schools/{id}/classes       <-- list all classrooms
   "success": true,
   "data": {
     "id": "cls_009",
-    "classroom_name": "Kindergarten",
-    "grade_level": "Grade 1",
+    "gradeLevel": "Grade 1",
     "section": "A",
-    "academic_year": "2026 - 2027",
-    "course_type": "Long terms",
-    "start_date": "2026-06-01",
-    "end_date": "2027-02-28",
-    "student_count": { "male": 18, "female": 15, "swd": 2, "total": 35 },
+    "academicYear": "2026 - 2027",
+    "courseType": "Long terms",
+    "maleCount": 18,
+    "femaleCount": 15,
+    "swdCount": 2,
+    "schoolMaleCount": 20,
+    "schoolFemaleCount": 18,
+    "schoolSwdCount": 3,
+    "teacherId": "tch_001",
     "teacher": { "id": "tch_001", "name": "Daw Hla Hla" }
   },
   "meta": null,
@@ -186,36 +188,37 @@ GET /api/v1/admin/schools/{id}/classes       <-- list all classrooms
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Missing required fields or invalid date |
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School ID does not exist |
-| `409` | `CONFLICT` | Classroom section already exists for this grade |
-| `422` | `BUSINESS_RULE_VIOLATION` | End date before start date |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code                | Description                                     |
+| ------ | ------------------------- | ----------------------------------------------- |
+| `400`  | `VALIDATION_ERROR`        | Missing required fields or invalid date         |
+| `401`  | `UNAUTHORIZED`            | Missing or invalid token                        |
+| `403`  | `FORBIDDEN`               | Insufficient role                               |
+| `404`  | `SCHOOL_NOT_FOUND`        | School ID does not exist                        |
+| `409`  | `CONFLICT`                | Classroom section already exists for this grade |
+| `422`  | `BUSINESS_RULE_VIOLATION` | End date before start date                      |
+| `429`  | `RATE_LIMIT_EXCEEDED`     | Rate limit exceeded                             |
+| `500`  | `INTERNAL_SERVER_ERROR`   | Unexpected server fault                         |
 
 ---
 
 ### 3. Update Classroom
+
 **PUT** `/api/v1/admin/schools/{id}/classes/{class_id}`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
-| `class_id` | string | Yes | Classroom UUID |
+| Parameter  | Type   | Required | Description    |
+| ---------- | ------ | -------- | -------------- |
+| `id`       | string | Yes      | School UUID    |
+| `class_id` | string | Yes      | Classroom UUID |
 
 **Request Body**
 
@@ -223,18 +226,17 @@ Same fields as [Create Classroom](#2-create-classroom). All fields required for 
 
 ```json
 {
-  "classroom_name": "Kindergarten",
-  "grade_level": "Grade 1",
+  "gradeLevel": "Grade 1",
   "section": "A",
-  "academic_year": "2026 - 2027",
-  "course_type": "Long terms",
-  "start_date": "2026-06-01",
-  "end_date": "2027-02-28",
-  "male_count": 20,
-  "female_count": 15,
-  "swd_count": 2,
-  "teacher_id": "tch_001",
-  "additional_info": ""
+  "academicYear": "2026 - 2027",
+  "courseType": "Long terms",
+  "maleCount": 20,
+  "femaleCount": 15,
+  "swdCount": 2,
+  "schoolMaleCount": 22,
+  "schoolFemaleCount": 18,
+  "schoolSwdCount": 3,
+  "teacherId": "tch_001"
 }
 ```
 
@@ -245,10 +247,15 @@ Same fields as [Create Classroom](#2-create-classroom). All fields required for 
   "success": true,
   "data": {
     "id": "cls_001",
-    "classroom_name": "Kindergarten",
-    "grade_level": "Grade 1",
+    "gradeLevel": "Grade 1",
     "section": "A",
-    "student_count": { "male": 20, "female": 15, "swd": 2, "total": 37 }
+    "maleCount": 20,
+    "femaleCount": 15,
+    "swdCount": 2,
+    "schoolMaleCount": 22,
+    "schoolFemaleCount": 18,
+    "schoolSwdCount": 3,
+    "teacherId": "tch_001"
   },
   "meta": null,
   "error": null,
@@ -258,34 +265,35 @@ Same fields as [Create Classroom](#2-create-classroom). All fields required for 
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Invalid input |
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `CLASSROOM_NOT_FOUND` | Classroom ID does not exist |
-| `409` | `CONFLICT` | Concurrent update conflict |
-| `422` | `BUSINESS_RULE_VIOLATION` | End date before start date |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code                | Description                 |
+| ------ | ------------------------- | --------------------------- |
+| `400`  | `VALIDATION_ERROR`        | Invalid input               |
+| `401`  | `UNAUTHORIZED`            | Missing or invalid token    |
+| `403`  | `FORBIDDEN`               | Insufficient role           |
+| `404`  | `CLASSROOM_NOT_FOUND`     | Classroom ID does not exist |
+| `409`  | `CONFLICT`                | Concurrent update conflict  |
+| `422`  | `BUSINESS_RULE_VIOLATION` | End date before start date  |
+| `429`  | `RATE_LIMIT_EXCEEDED`     | Rate limit exceeded         |
+| `500`  | `INTERNAL_SERVER_ERROR`   | Unexpected server fault     |
 
 ---
 
 ### 4. Export Classrooms
+
 **GET** `/api/v1/admin/schools/{id}/classes/export`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Response – 200 OK**
 
@@ -293,23 +301,23 @@ Returns a binary file download (`Content-Type: application/vnd.openxmlformats-of
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School ID does not exist |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `403`  | `FORBIDDEN`             | Insufficient role        |
+| `404`  | `SCHOOL_NOT_FOUND`      | School ID does not exist |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
 
 ## Error Codes
 
-| Code | HTTP Status | Description |
-|---|---|---|
-| `VALIDATION_ERROR` | 400 | Invalid input |
-| `UNAUTHORIZED` | 401 | Missing or invalid token |
-| `FORBIDDEN` | 403 | Insufficient role |
-| `SCHOOL_NOT_FOUND` | 404 | School not found |
-| `CLASSROOM_NOT_FOUND` | 404 | Classroom not found |
-| `CONFLICT` | 409 | Duplicate section or concurrent update |
-| `BUSINESS_RULE_VIOLATION` | 422 | Date range invalid |
-| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected server error |
+| Code                      | HTTP Status | Description                            |
+| ------------------------- | ----------- | -------------------------------------- |
+| `VALIDATION_ERROR`        | 400         | Invalid input                          |
+| `UNAUTHORIZED`            | 401         | Missing or invalid token               |
+| `FORBIDDEN`               | 403         | Insufficient role                      |
+| `SCHOOL_NOT_FOUND`        | 404         | School not found                       |
+| `CLASSROOM_NOT_FOUND`     | 404         | Classroom not found                    |
+| `CONFLICT`                | 409         | Duplicate section or concurrent update |
+| `BUSINESS_RULE_VIOLATION` | 422         | Date range invalid                     |
+| `RATE_LIMIT_EXCEEDED`     | 429         | Too many requests                      |
+| `INTERNAL_SERVER_ERROR`   | 500         | Unexpected server error                |

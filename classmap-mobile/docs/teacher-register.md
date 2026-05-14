@@ -26,7 +26,7 @@
 ## Endpoints
 
 - [GET `/api/v1/mobile/schools/lookup`](#1-lookup-school-by-code) — Validate school register code
-- [POST `/api/v1/mobile/teacher-registrations`](#2-create-teacher-registration) — Step 1: Submit teacher info
+- [POST `/api/v1/mobile/teacher-registrations/draft`](#2-create-teacher-registration) — Step 1: Submit teacher info
 - [POST `/api/v1/mobile/teacher-registrations/{id}/otp/request`](#3-request-otp) — Step 2: Request OTP for phone
 - [POST `/api/v1/mobile/teacher-registrations/{id}/otp/verify`](#4-verify-otp) — Step 2: Verify OTP code
 - [POST `/api/v1/mobile/teacher-registrations/{id}/submit`](#5-submit-registration) — Final submission
@@ -34,22 +34,23 @@
 ---
 
 ### 1. Lookup School by Code
-**GET** `/api/v1/mobile/schools/lookup?code={code}`
+
+**GET** `/api/v1/mobile/schools/lookup?schoolCode={schoolCode}`
 
 Validate a school register code and return school details. Called inline when the user enters a code.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| code | string | Yes | School register code, e.g. SCH001 |
+| Parameter  | Type   | Required | Description                       |
+| ---------- | ------ | -------- | --------------------------------- |
+| schoolCode | string | Yes      | School register code, e.g. SCH001 |
 
 **Response – 200 OK**
 
@@ -58,10 +59,10 @@ Validate a school register code and return school details. Called inline when th
   "success": true,
   "data": {
     "id": "sch_001",
-    "code": "SCH001",
-    "name_en": "Basic Education High School No. 2 Kamayut",
-    "name_mm": "အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်",
-    "status": "active"
+    "schoolCode": "SCH001",
+    "name": "Basic Education High School No. 2 Kamayut",
+    "nameMm": "အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်",
+    "schoolStatus": "valid"
   },
   "meta": null,
   "error": null,
@@ -87,30 +88,35 @@ Validate a school register code and return school details. Called inline when th
 ---
 
 ### 2. Create Teacher Registration
-**POST** `/api/v1/mobile/teacher-registrations`
+
+**POST** `/api/v1/mobile/teacher-registrations/draft`
 
 Step 1: Create a teacher registration with school code, displayed name, and phone number.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| school_code | string | Yes | Valid school register code |
-| displayed_name | string | Yes | Name shown in the app |
-| phone_number | string | Yes | E.164 format for SMS login |
+| Field       | Type   | Required | Description                   |
+| ----------- | ------ | -------- | ----------------------------- |
+| schoolCode  | string | Yes      | Valid school register code    |
+| displayName | string | Yes      | Name shown in the app         |
+| phoneNumber | string | Yes      | E.164 format for SMS login    |
+| email       | string | No       | Email address                 |
+| langCode    | string | No       | Language code (default: `en`) |
 
 ```json
 {
-  "school_code": "SCH001",
-  "displayed_name": "U Aung Kyaw",
-  "phone_number": "+959123456789"
+  "schoolCode": "SCH001",
+  "displayName": "U Aung Kyaw",
+  "phoneNumber": "+959123456789",
+  "email": "uaung@example.com",
+  "langCode": "en"
 }
 ```
 
@@ -121,12 +127,10 @@ Step 1: Create a teacher registration with school code, displayed name, and phon
   "success": true,
   "data": {
     "id": "tch_reg_001",
-    "school_id": "sch_001",
-    "school_name": "Basic Education High School No. 2 Kamayut",
-    "displayed_name": "U Aung Kyaw",
-    "phone_number": "+959123456789",
-    "status": "draft",
-    "created_at": "2026-05-10T06:30:00Z"
+    "currentStep": "request_otp",
+    "referenceCode": "F2aR4",
+    "retryAfter": 60,
+    "expireIn": 600
   },
   "meta": null,
   "error": null,
@@ -143,7 +147,7 @@ Step 1: Create a teacher registration with school code, displayed name, and phon
   "meta": null,
   "error": {
     "code": "VALIDATION_ERROR",
-    "details": { "school_code": "Invalid school code" }
+    "details": { "schoolCode": "Invalid school code" }
   },
   "message": "Validation failed"
 }
@@ -167,22 +171,23 @@ Step 1: Create a teacher registration with school code, displayed name, and phon
 ---
 
 ### 3. Request OTP
+
 **POST** `/api/v1/mobile/teacher-registrations/{id}/otp/request`
 
 Step 2: Request an OTP to verify the teacher's phone number.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Path Variables**
 
-| Variable | Description |
-|---|---|
-| id | Teacher registration ID from step 1 |
+| Variable | Description                         |
+| -------- | ----------------------------------- |
+| id       | Teacher registration ID from step 1 |
 
 **Response – 200 OK**
 
@@ -190,9 +195,9 @@ Step 2: Request an OTP to verify the teacher's phone number.
 {
   "success": true,
   "data": {
-    "ref_code": "F2aR4",
-    "expires_in": 300,
-    "retry_after": 299
+    "referenceCode": "F2aR4",
+    "expireIn": 600,
+    "retryAfter": 60
   },
   "meta": null,
   "error": null,
@@ -233,34 +238,35 @@ Step 2: Request an OTP to verify the teacher's phone number.
 ---
 
 ### 4. Verify OTP
+
 **POST** `/api/v1/mobile/teacher-registrations/{id}/otp/verify`
 
 Verify the 6-digit OTP code for the teacher registration.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Path Variables**
 
-| Variable | Description |
-|---|---|
-| id | Teacher registration ID |
+| Variable | Description             |
+| -------- | ----------------------- |
+| id       | Teacher registration ID |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| otp_code | string | Yes | 6-digit code from SMS |
-| ref_code | string | Yes | Reference code from OTP request |
+| Field         | Type   | Required | Description                     |
+| ------------- | ------ | -------- | ------------------------------- |
+| otp           | string | Yes      | 6-digit code from SMS           |
+| referenceCode | string | Yes      | Reference code from OTP request |
 
 ```json
 {
-  "otp_code": "123861",
-  "ref_code": "F2aR4"
+  "otp": "123861",
+  "referenceCode": "F2aR4"
 }
 ```
 
@@ -271,8 +277,7 @@ Verify the 6-digit OTP code for the teacher registration.
   "success": true,
   "data": {
     "id": "tch_reg_001",
-    "phone_verified": true,
-    "status": "phone_verified"
+    "currentStep": "verify_otp"
   },
   "meta": null,
   "error": null,
@@ -313,22 +318,23 @@ Verify the 6-digit OTP code for the teacher registration.
 ---
 
 ### 5. Submit Registration
+
 **POST** `/api/v1/mobile/teacher-registrations/{id}/submit`
 
 Final submission after phone verification. Status changes to `pending_review`. An SMS notification will be sent once approved.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Path Variables**
 
-| Variable | Description |
-|---|---|
-| id | Teacher registration ID |
+| Variable | Description             |
+| -------- | ----------------------- |
+| id       | Teacher registration ID |
 
 **Response – 200 OK**
 
@@ -337,8 +343,7 @@ Final submission after phone verification. Status changes to `pending_review`. A
   "success": true,
   "data": {
     "id": "tch_reg_001",
-    "status": "pending_review",
-    "submitted_at": "2026-05-10T07:00:00Z"
+    "currentStep": "submitted"
   },
   "meta": null,
   "error": null,
@@ -363,13 +368,13 @@ Final submission after phone verification. Status changes to `pending_review`. A
 
 ## Error Codes
 
-| Code | HTTP Status | Description |
-|---|---|---|
-| SCHOOL_CODE_NOT_FOUND | 404 | School register code does not exist |
-| VALIDATION_ERROR | 400 | Required field missing or invalid |
-| PHONE_ALREADY_USED | 409 | Phone number already registered |
-| REGISTRATION_NOT_FOUND | 404 | Teacher registration ID not found |
-| OTP_RATE_LIMIT | 429 | Too many OTP requests |
-| INVALID_OTP | 400 | Incorrect OTP code |
-| OTP_EXPIRED | 401 | OTP code has expired |
-| PHONE_NOT_VERIFIED | 422 | Phone verification required before submission |
+| Code                   | HTTP Status | Description                                   |
+| ---------------------- | ----------- | --------------------------------------------- |
+| SCHOOL_CODE_NOT_FOUND  | 404         | School register code does not exist           |
+| VALIDATION_ERROR       | 400         | Required field missing or invalid             |
+| PHONE_ALREADY_USED     | 409         | Phone number already registered               |
+| REGISTRATION_NOT_FOUND | 404         | Teacher registration ID not found             |
+| OTP_RATE_LIMIT         | 429         | Too many OTP requests                         |
+| INVALID_OTP            | 400         | Incorrect OTP code                            |
+| OTP_EXPIRED            | 401         | OTP code has expired                          |
+| PHONE_NOT_VERIFIED     | 422         | Phone verification required before submission |
