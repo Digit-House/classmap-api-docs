@@ -62,7 +62,7 @@ GET /api/v1/admin/notifications                 <-- list (search + status + audi
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `page` | integer | No | Page number (default: 1) |
-| `per_page` | integer | No | Items per page (default: 20) |
+| `limit` | integer | No | Items per page (default: 20) |
 | `search` | string | No | Search by notification title or message |
 | `status` | string | No | Filter: `sent`, `scheduled`, `draft`, `failed` |
 | `audience` | string | No | Filter by audience code (see `/audiences`) |
@@ -82,9 +82,9 @@ GET /api/v1/admin/notifications                 <-- list (search + status + audi
         "label": "All Schools"
       },
       "recipients": 1250,
-      "sent_at": "2026-05-01T09:00:00Z",
+      "sentAt": "2026-05-01T09:00:00Z",
       "status": "sent",
-      "created_at": "2026-04-28T10:12:00Z"
+      "createdAt": "2026-04-28T10:12:00Z"
     },
     {
       "id": "ntf_002",
@@ -95,15 +95,16 @@ GET /api/v1/admin/notifications                 <-- list (search + status + audi
         "label": "Elementary School"
       },
       "recipients": 800,
-      "sent_at": "2026-10-15T17:00:00Z",
+      "sentAt": "2026-10-15T17:00:00Z",
       "status": "scheduled",
-      "created_at": "2026-09-20T14:00:00Z"
+      "createdAt": "2026-09-20T14:00:00Z"
     }
   ],
   "meta": {
     "page": 1,
-    "per_page": 20,
-    "total": 34
+    "limit": 20,
+    "total": 34,
+    "totalPages": 2
   },
   "error": null,
   "message": "Successfully"
@@ -140,10 +141,10 @@ Used by the Create/Edit form to populate the "Audience" dropdown (`Select accoun
 {
   "success": true,
   "data": [
-    { "code": "ALL_SCHOOLS",       "label": "All Schools",       "estimated_recipients": 1250 },
-    { "code": "ELEMENTARY_SCHOOL", "label": "Elementary School", "estimated_recipients": 800  },
-    { "code": "HIGH_SCHOOL",       "label": "High School",       "estimated_recipients": 450  },
-    { "code": "COMMUNITY_CENTER",  "label": "Community Center",  "estimated_recipients": 0    }
+    { "code": "ALL_SCHOOLS",       "label": "All Schools",       "estimatedRecipients": 1250 },
+    { "code": "ELEMENTARY_SCHOOL", "label": "Elementary School", "estimatedRecipients": 800  },
+    { "code": "HIGH_SCHOOL",       "label": "High School",       "estimatedRecipients": 450  },
+    { "code": "COMMUNITY_CENTER",  "label": "Community Center",  "estimatedRecipients": 0    }
   ],
   "meta": null,
   "error": null,
@@ -179,8 +180,8 @@ Used by the Create/Edit form to populate the "Audience" dropdown (`Select accoun
 | `title` | string | Yes | Notification title (max 120 chars) |
 | `message` | string | Yes | Notification body (max 500 chars) |
 | `audience` | string | Yes | Audience code from `/audiences` endpoint |
-| `schedule_type` | string | Yes | `send_now` or `schedule` |
-| `scheduled_at` | string (ISO 8601) | Conditional | Required when `schedule_type = schedule`. Future datetime. |
+| `scheduleType` | string | Yes | `send_now` or `schedule` |
+| `scheduledAt` | string (ISO 8601) | Conditional | Required when `schedule_type = schedule`. Future datetime. |
 
 **Example – Send Now**
 ```json
@@ -188,7 +189,7 @@ Used by the Create/Edit form to populate the "Audience" dropdown (`Select accoun
   "title": "Winter Break Schedule",
   "message": "Winter break will be from December 23, 2026 to January 2, 2027.",
   "audience": "ALL_SCHOOLS",
-  "schedule_type": "send_now"
+  "scheduleType": "send_now"
 }
 ```
 
@@ -198,8 +199,8 @@ Used by the Create/Edit form to populate the "Audience" dropdown (`Select accoun
   "title": "Spring Sports Registration",
   "message": "Register for spring sports by March 1, 2027.",
   "audience": "HIGH_SCHOOL",
-  "schedule_type": "schedule",
-  "scheduled_at": "2027-02-10T10:00:00Z"
+  "scheduleType": "schedule",
+  "scheduledAt": "2027-02-10T10:00:00Z"
 }
 ```
 
@@ -218,9 +219,9 @@ Used by the Create/Edit form to populate the "Audience" dropdown (`Select accoun
     },
     "recipients": 450,
     "status": "scheduled",
-    "scheduled_at": "2027-02-10T10:00:00Z",
-    "sent_at": null,
-    "created_at": "2026-05-10T09:00:00Z"
+    "scheduledAt": "2027-02-10T10:00:00Z",
+    "sentAt": null,
+    "createdAt": "2026-05-10T09:00:00Z"
   },
   "meta": null,
   "error": null,
@@ -236,7 +237,7 @@ Used by the Create/Edit form to populate the "Audience" dropdown (`Select accoun
 | `401` | `UNAUTHORIZED` | Missing or invalid token |
 | `403` | `FORBIDDEN` | Insufficient role |
 | `404` | `AUDIENCE_NOT_FOUND` | Audience code does not exist |
-| `422` | `BUSINESS_RULE_VIOLATION` | `scheduled_at` must be in the future |
+| `422` | `BUSINESS_RULE_VIOLATION` | `scheduledAt` must be in the future |
 | `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
 | `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
 
@@ -275,16 +276,16 @@ Used by the "View Details" modal.
     },
     "recipients": 1250,
     "status": "sent",
-    "schedule_type": "send_now",
-    "scheduled_at": null,
-    "sent_at": "2026-05-01T09:00:00Z",
-    "created_at": "2026-04-28T10:12:00Z",
-    "created_by": {
+    "scheduleType": "send_now",
+    "scheduledAt": null,
+    "sentAt": "2026-05-01T09:00:00Z",
+    "createdAt": "2026-04-28T10:12:00Z",
+    "createdBy": {
       "id": "usr_001",
-      "display_name": "Taylor"
+      "displayName": "Taylor"
     },
-    "can_edit": false,
-    "can_delete": true
+    "canEdit": false,
+    "canDelete": true
   },
   "meta": null,
   "error": null,
@@ -332,8 +333,8 @@ Same fields as [Create Notification](#3-create-notification). All required field
   "title": "Spring Sports Registration (Updated)",
   "message": "Register for spring sports by March 5, 2027.",
   "audience": "HIGH_SCHOOL",
-  "schedule_type": "schedule",
-  "scheduled_at": "2027-02-12T10:00:00Z"
+  "scheduleType": "schedule",
+  "scheduledAt": "2027-02-12T10:00:00Z"
 }
 ```
 
@@ -346,8 +347,8 @@ Same fields as [Create Notification](#3-create-notification). All required field
     "id": "ntf_010",
     "title": "Spring Sports Registration (Updated)",
     "status": "scheduled",
-    "scheduled_at": "2027-02-12T10:00:00Z",
-    "updated_at": "2026-05-10T09:30:00Z"
+    "scheduledAt": "2027-02-12T10:00:00Z",
+    "updatedAt": "2026-05-10T09:30:00Z"
   },
   "meta": null,
   "error": null,
@@ -364,7 +365,7 @@ Same fields as [Create Notification](#3-create-notification). All required field
 | `403` | `FORBIDDEN` | Insufficient role |
 | `404` | `NOTIFICATION_NOT_FOUND` | Notification not found |
 | `409` | `CONFLICT` | Concurrent update conflict |
-| `422` | `BUSINESS_RULE_VIOLATION` | Notification already sent or `scheduled_at` in the past |
+| `422` | `BUSINESS_RULE_VIOLATION` | Notification already sent or `scheduledAt` in the past |
 | `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
 | `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
 

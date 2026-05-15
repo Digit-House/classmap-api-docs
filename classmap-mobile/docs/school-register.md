@@ -19,31 +19,34 @@
 
 ## Endpoints
 
-- [GET `/api/v1/mobile/school-systems`](#1-list-school-systems) — List available school systems
-- [GET `/api/v1/mobile/unesco-partners`](#2-list-unesco-partners) — List UNESCO partners
-- [GET `/api/v1/mobile/locations/states`](#3-list-states) — List states
-- [GET `/api/v1/mobile/locations/districts`](#4-list-districts) — List districts by state
-- [GET `/api/v1/mobile/locations/townships`](#5-list-townships) — List townships by district
-- [GET `/api/v1/mobile/locations/postcodes`](#6-list-postcodes) — List postcodes by township
-- [POST `/api/v1/mobile/school-registrations`](#7-create-school-registration) — Step 1: Submit school info
+- [GET `/api/v1/mobile/taxonomy/school-systems`](#1-list-school-systems) — List available school systems
+- [GET `/api/v1/mobile/user/unesco-partners`](#2-list-unesco-partners) — List UNESCO partners
+- [GET `/api/v1/mobile/taxonomy/states`](#3-list-states) — List states
+- [GET `/api/v1/mobile/taxonomy/districts`](#4-list-districts) — List districts by state
+- [GET `/api/v1/mobile/taxonomy/townships`](#5-list-townships) — List townships by district
+- [GET `/api/v1/mobile/locations/postcodes`](#6-list-postcodes) — List postcodes by township (not yet implemented)
+- [POST `/api/v1/mobile/school-registrations/draft`](#7-create-school-registration) — Step 1: Submit school info
 - [PUT `/api/v1/mobile/school-registrations/{id}/documents`](#8-upload-documents) — Step 2: Upload proof documents
 - [PUT `/api/v1/mobile/school-registrations/{id}/admin-account`](#9-setup-admin-account) — Step 3: Setup first teacher account
+- [POST `/api/v1/mobile/school-registrations/{id}/otp/request`](#9a-request-otp-for-admin-phone) — Request OTP for admin phone
+- [POST `/api/v1/mobile/school-registrations/{id}/otp/verify`](#9b-verify-admin-phone-otp) — Verify admin phone OTP
 - [GET `/api/v1/mobile/school-registrations/{id}`](#10-get-registration-preview) — Step 4: Preview all data
 - [POST `/api/v1/mobile/school-registrations/{id}/submit`](#11-submit-registration) — Final submission for review
 
 ---
 
 ### 1. List School Systems
-**GET** `/api/v1/mobile/school-systems`
+
+**GET** `/api/v1/mobile/taxonomy/school-systems`
 
 Fetch all available school systems for the dropdown.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Response – 200 OK**
 
@@ -64,16 +67,17 @@ Fetch all available school systems for the dropdown.
 ---
 
 ### 2. List UNESCO Partners
-**GET** `/api/v1/mobile/unesco-partners`
+
+**GET** `/api/v1/mobile/user/unesco-partners`
 
 Fetch all UNESCO partners for the optional dropdown.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Response – 200 OK**
 
@@ -81,8 +85,11 @@ Fetch all UNESCO partners for the optional dropdown.
 {
   "success": true,
   "data": [
-    { "id": "rise", "name": "Rural Indigenous Sustainable Education" },
-    { "id": "unesco_mm", "name": "UNESCO Myanmar" }
+    {
+      "id": "usr_rise",
+      "displayedName": "Rural Indigenous Sustainable Education"
+    },
+    { "id": "usr_unesco", "displayedName": "UNESCO Myanmar" }
   ],
   "meta": null,
   "error": null,
@@ -93,16 +100,17 @@ Fetch all UNESCO partners for the optional dropdown.
 ---
 
 ### 3. List States
-**GET** `/api/v1/mobile/locations/states`
+
+**GET** `/api/v1/mobile/taxonomy/states`
 
 Fetch all states for the location dropdown.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Response – 200 OK**
 
@@ -122,24 +130,23 @@ Fetch all states for the location dropdown.
 ---
 
 ### 4. List Districts
-**GET** `/api/v1/mobile/locations/districts?state_id={state_id}`
+
+**GET** `/api/v1/mobile/taxonomy/districts?stateId={stateId}`
 
 Fetch districts filtered by state.
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| state_id | string | Yes | State ID from list states |
+| Parameter | Type   | Required | Description               |
+| --------- | ------ | -------- | ------------------------- |
+| stateId   | string | Yes      | State ID from list states |
 
 **Response – 200 OK**
 
 ```json
 {
   "success": true,
-  "data": [
-    { "id": "ygn_01", "name": "Yangon", "state_id": "ygn" }
-  ],
+  "data": [{ "id": "ygn_01", "name": "Yangon", "state_id": "ygn" }],
   "meta": null,
   "error": null,
   "message": "Districts retrieved"
@@ -149,24 +156,23 @@ Fetch districts filtered by state.
 ---
 
 ### 5. List Townships
-**GET** `/api/v1/mobile/locations/townships?district_id={district_id}`
+
+**GET** `/api/v1/mobile/taxonomy/townships?districtId={districtId}`
 
 Fetch townships filtered by district.
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| district_id | string | Yes | District ID from list districts |
+| Parameter  | Type   | Required | Description                     |
+| ---------- | ------ | -------- | ------------------------------- |
+| districtId | string | Yes      | District ID from list districts |
 
 **Response – 200 OK**
 
 ```json
 {
   "success": true,
-  "data": [
-    { "id": "kamayut", "name": "Kamayut", "district_id": "ygn_01" }
-  ],
+  "data": [{ "id": "kamayut", "name": "Kamayut", "district_id": "ygn_01" }],
   "meta": null,
   "error": null,
   "message": "Townships retrieved"
@@ -176,24 +182,25 @@ Fetch townships filtered by district.
 ---
 
 ### 6. List Postcodes
-**GET** `/api/v1/mobile/locations/postcodes?township_id={township_id}`
+
+**GET** `/api/v1/mobile/locations/postcodes?townshipId={townshipId}`
+
+> **Note**: This endpoint is not yet implemented in the backend. Listed here for future reference.
 
 Fetch postcodes filtered by township.
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| township_id | string | Yes | Township ID from list townships |
+| Parameter  | Type   | Required | Description                     |
+| ---------- | ------ | -------- | ------------------------------- |
+| townshipId | string | Yes      | Township ID from list townships |
 
 **Response – 200 OK**
 
 ```json
 {
   "success": true,
-  "data": [
-    { "id": "100293", "code": "100293", "township_id": "kamayut" }
-  ],
+  "data": [{ "id": "100293", "code": "100293", "townshipId": "kamayut" }],
   "meta": null,
   "error": null,
   "message": "Postcodes retrieved"
@@ -203,44 +210,49 @@ Fetch postcodes filtered by township.
 ---
 
 ### 7. Create School Registration
-**POST** `/api/v1/mobile/school-registrations`
+
+**POST** `/api/v1/mobile/school-registrations/draft`
 
 Step 1: Submit school information and create a registration draft.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| school_system_id | string | Yes | Selected school system ID |
-| unesco_partner_id | string | No | Selected UNESCO partner ID |
-| full_name_en | string | Yes | School full name in English |
-| full_name_mm | string | Yes | School full name in Myanmar |
-| abbreviation_en | string | Yes | Abbreviation in English |
-| abbreviation_mm | string | Yes | Abbreviation in Myanmar |
-| state_id | string | Yes | State ID |
-| district_id | string | Yes | District ID |
-| township_id | string | Yes | Township ID |
-| postcode_id | string | Yes | Postcode ID |
+| Field          | Type   | Required | Description                     |
+| -------------- | ------ | -------- | ------------------------------- |
+| schoolSystemId | string | Yes      | Selected school system ID       |
+| partnerUserId  | string | No       | Selected UNESCO partner user ID |
+| nameEn         | string | Yes      | School full name in English     |
+| nameMm         | string | No       | School full name in Myanmar     |
+| abbreviationEn | string | No       | Abbreviation in English         |
+| abbreviationMm | string | No       | Abbreviation in Myanmar         |
+| stateId        | string | Yes      | State ID                        |
+| districtId     | string | Yes      | District ID                     |
+| townshipId     | string | Yes      | Township ID                     |
+| postcode       | string | No       | Postal code (e.g. `100293`)     |
+| address1       | string | No       | Street address                  |
+| memo           | string | No       | Additional notes                |
 
 ```json
 {
-  "school_system_id": "gov",
-  "unesco_partner_id": "rise",
-  "full_name_en": "Basic Education High School No. 2 Kamayut",
-  "full_name_mm": "အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်",
-  "abbreviation_en": "Kamayut 2",
-  "abbreviation_mm": "ကမာရွတ်(၂)",
-  "state_id": "ygn",
-  "district_id": "ygn_01",
-  "township_id": "kamayut",
-  "postcode_id": "100293"
+  "schoolSystemId": "gov",
+  "partnerUserId": "rise",
+  "nameEn": "Basic Education High School No. 2 Kamayut",
+  "nameMm": "အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်",
+  "abbreviationEn": "Kamayut 2",
+  "abbreviationMm": "ကမာရွတ်(၂)",
+  "stateId": "ygn",
+  "districtId": "ygn_01",
+  "townshipId": "kamayut",
+  "postcode": "100293",
+  "address1": "123 Kamayut Road",
+  "memo": "New school application"
 }
 ```
 
@@ -251,13 +263,14 @@ Step 1: Submit school information and create a registration draft.
   "success": true,
   "data": {
     "id": "sch_reg_001",
-    "status": "draft",
-    "current_step": 1,
-    "created_at": "2026-05-10T06:30:00Z"
+    "currentStep": "school_info",
+    "referenceCode": "F2aR4",
+    "retryAfter": 60,
+    "expireIn": 600
   },
   "meta": null,
   "error": null,
-  "message": "School registration created"
+  "message": "Draft created"
 }
 ```
 
@@ -270,7 +283,7 @@ Step 1: Submit school information and create a registration draft.
   "meta": null,
   "error": {
     "code": "VALIDATION_ERROR",
-    "details": { "full_name_en": "This field is required" }
+    "details": { "nameEn": "This field is required" }
   },
   "message": "Validation failed"
 }
@@ -279,29 +292,29 @@ Step 1: Submit school information and create a registration draft.
 ---
 
 ### 8. Upload Documents
+
 **PUT** `/api/v1/mobile/school-registrations/{id}/documents`
 
 Step 2: Upload proof of document photos and notes. Uses `multipart/form-data`.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | multipart/form-data | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value               | Required |
+| ------------ | ------------------- | -------- |
+| Content-Type | multipart/form-data | Yes      |
+| X-Request-ID | {{$guid}}           | Yes      |
 
 **Path Variables**
 
-| Variable | Description |
-|---|---|
-| id | School registration ID from step 1 |
+| Variable | Description                        |
+| -------- | ---------------------------------- |
+| id       | School registration ID from step 1 |
 
 **Request Body (multipart)**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| photos | file[] | Yes | JPEG/PNG, max 5MB each, up to 5 photos |
-| notes | string | Yes | Notes to UNESCO reviewer |
+| Field | Type   | Required | Description                            |
+| ----- | ------ | -------- | -------------------------------------- |
+| files | file[] | Yes      | JPEG/PNG, max 5MB each, up to 10 files |
 
 **Response – 200 OK**
 
@@ -310,13 +323,7 @@ Step 2: Upload proof of document photos and notes. Uses `multipart/form-data`.
   "success": true,
   "data": {
     "id": "sch_reg_001",
-    "status": "draft",
-    "current_step": 2,
-    "documents": [
-      { "id": "doc_1", "url": "https://cdn.example.com/doc_1.jpg" },
-      { "id": "doc_2", "url": "https://cdn.example.com/doc_2.jpg" }
-    ],
-    "notes": "This is an example notes."
+    "currentStep": "upload_documents"
   },
   "meta": null,
   "error": null,
@@ -357,34 +364,39 @@ Step 2: Upload proof of document photos and notes. Uses `multipart/form-data`.
 ---
 
 ### 9. Setup Admin Account
+
 **PUT** `/api/v1/mobile/school-registrations/{id}/admin-account`
 
 Step 3: Create the first teacher/admin account for the school.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Path Variables**
 
-| Variable | Description |
-|---|---|
-| id | School registration ID |
+| Variable | Description            |
+| -------- | ---------------------- |
+| id       | School registration ID |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| displayed_name | string | Yes | Name shown in the app |
-| phone_number | string | Yes | E.164 format for SMS login |
+| Field       | Type   | Required | Description                   |
+| ----------- | ------ | -------- | ----------------------------- |
+| displayName | string | Yes      | Name shown in the app         |
+| phoneNumber | string | Yes      | E.164 format for SMS login    |
+| email       | string | No       | Email address                 |
+| langCode    | string | No       | Language code (default: `en`) |
 
 ```json
 {
-  "displayed_name": "Daw Mya Mya",
-  "phone_number": "+959123456789"
+  "displayName": "Daw Mya Mya",
+  "phoneNumber": "+959123456789",
+  "email": "dawmya@example.com",
+  "langCode": "en"
 }
 ```
 
@@ -395,11 +407,12 @@ Step 3: Create the first teacher/admin account for the school.
   "success": true,
   "data": {
     "id": "sch_reg_001",
-    "status": "draft",
-    "current_step": 3,
-    "admin_account": {
-      "displayed_name": "Daw Mya Mya",
-      "phone_number": "+959123456789"
+    "currentStep": "admin_account",
+    "adminAccount": {
+      "displayName": "Daw Mya Mya",
+      "phoneNumber": "+959123456789",
+      "email": "dawmya@example.com",
+      "langCode": "en"
     }
   },
   "meta": null,
@@ -425,23 +438,24 @@ Step 3: Create the first teacher/admin account for the school.
 
 ---
 
-### 10. Get Registration Preview
-**GET** `/api/v1/mobile/school-registrations/{id}`
+### 9a. Request OTP for Admin Phone
 
-Step 4: Retrieve the full registration data for preview before submission.
+**POST** `/api/v1/mobile/school-registrations/{id}/otp/request`
+
+Request an OTP to verify the admin phone number.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Path Variables**
 
-| Variable | Description |
-|---|---|
-| id | School registration ID |
+| Variable | Description            |
+| -------- | ---------------------- |
+| id       | School registration ID |
 
 **Response – 200 OK**
 
@@ -450,29 +464,154 @@ Step 4: Retrieve the full registration data for preview before submission.
   "success": true,
   "data": {
     "id": "sch_reg_001",
-    "status": "draft",
-    "current_step": 4,
-    "school_info": {
-      "school_system": "Government School",
-      "unesco_partner": "Rural Indigenous Sustainable Education",
-      "full_name_en": "Basic Education High School No. 2 Kamayut",
-      "full_name_mm": "အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်",
-      "abbreviation_en": "Kamayut 2",
-      "abbreviation_mm": "ကမာရွတ်(၂)",
-      "state": "Yangon",
-      "district": "Yangon",
-      "township": "Kamayut",
-      "postcode": "100293"
+    "currentStep": "request_otp",
+    "referenceCode": "F2aR4",
+    "retryAfter": 60,
+    "expireIn": 600
+  },
+  "meta": null,
+  "error": null,
+  "message": "OTP sent"
+}
+```
+
+**Response – 429 Too Many Requests**
+
+```json
+{
+  "success": false,
+  "data": null,
+  "meta": null,
+  "error": {
+    "code": "OTP_RATE_LIMIT",
+    "details": "Please wait before requesting a new code"
+  },
+  "message": "Too many OTP requests"
+}
+```
+
+---
+
+### 9b. Verify Admin Phone OTP
+
+**POST** `/api/v1/mobile/school-registrations/{id}/otp/verify`
+
+Verify the 6-digit OTP for the admin phone.
+
+**Headers**
+
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
+
+**Path Variables**
+
+| Variable | Description            |
+| -------- | ---------------------- |
+| id       | School registration ID |
+
+**Request Body**
+
+| Field         | Type   | Required | Description                     |
+| ------------- | ------ | -------- | ------------------------------- |
+| otp           | string | Yes      | 6-digit code from SMS           |
+| referenceCode | string | Yes      | Reference code from OTP request |
+
+```json
+{
+  "otp": "123861",
+  "referenceCode": "F2aR4"
+}
+```
+
+**Response – 200 OK**
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "sch_reg_001",
+    "currentStep": "verify_otp"
+  },
+  "meta": null,
+  "error": null,
+  "message": "OTP verified"
+}
+```
+
+**Response – 400 Bad Request**
+
+```json
+{
+  "success": false,
+  "data": null,
+  "meta": null,
+  "error": {
+    "code": "INVALID_OTP",
+    "details": "The code is incorrect. Please try again."
+  },
+  "message": "Invalid OTP"
+}
+```
+
+---
+
+### 10. Get Registration Preview
+
+**GET** `/api/v1/mobile/school-registrations/{id}`
+
+Step 4: Retrieve the full registration data for preview before submission.
+
+**Headers**
+
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
+
+**Path Variables**
+
+| Variable | Description            |
+| -------- | ---------------------- |
+| id       | School registration ID |
+
+**Response – 200 OK**
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "sch_reg_001",
+    "currentStep": "preview",
+    "schoolInfo": {
+      "schoolSystem": { "id": "gov", "name": "Government School" },
+      "partnerUser": {
+        "id": "rise",
+        "displayName": "Rural Indigenous Sustainable Education"
+      },
+      "nameEn": "Basic Education High School No. 2 Kamayut",
+      "nameMm": "အခြေခံပညာအထက်တန်းကျောင်း (၂) ကမာရွတ်",
+      "abbreviationEn": "Kamayut 2",
+      "abbreviationMm": "ကမာရွတ်(၂)",
+      "state": { "id": "ygn", "name": "Yangon" },
+      "district": { "id": "ygn_01", "name": "Yangon" },
+      "township": { "id": "kamayut", "name": "Kamayut" },
+      "postcode": "100293",
+      "address1": "123 Kamayut Road",
+      "phoneNumber": "+951234567",
+      "email": "school@example.com",
+      "memo": "New school application"
     },
     "documents": {
-      "photos": [
-        { "id": "doc_1", "url": "https://cdn.example.com/doc_1.jpg" }
-      ],
+      "photos": [{ "id": "doc_1", "url": "https://cdn.example.com/doc_1.jpg" }],
       "notes": "This is an example notes."
     },
-    "admin_account": {
-      "displayed_name": "Daw Mya Mya",
-      "phone_number": "+959123456789"
+    "adminAccount": {
+      "displayName": "Daw Mya Mya",
+      "phoneNumber": "+959123456789",
+      "email": "dawmya@example.com",
+      "langCode": "en"
     }
   },
   "meta": null,
@@ -484,22 +623,23 @@ Step 4: Retrieve the full registration data for preview before submission.
 ---
 
 ### 11. Submit Registration
+
 **POST** `/api/v1/mobile/school-registrations/{id}/submit`
 
 Final submission. Status changes to `pending_review`. An SMS notification will be sent once approved.
 
 **Headers**
 
-| Header | Value | Required |
-|---|---|---|
-| Content-Type | application/json | Yes |
-| X-Request-ID | {{$guid}} | Yes |
+| Header       | Value            | Required |
+| ------------ | ---------------- | -------- |
+| Content-Type | application/json | Yes      |
+| X-Request-ID | {{$guid}}        | Yes      |
 
 **Path Variables**
 
-| Variable | Description |
-|---|---|
-| id | School registration ID |
+| Variable | Description            |
+| -------- | ---------------------- |
+| id       | School registration ID |
 
 **Response – 200 OK**
 
@@ -508,8 +648,7 @@ Final submission. Status changes to `pending_review`. An SMS notification will b
   "success": true,
   "data": {
     "id": "sch_reg_001",
-    "status": "pending_review",
-    "submitted_at": "2026-05-10T07:00:00Z"
+    "currentStep": "submitted"
   },
   "meta": null,
   "error": null,
@@ -534,10 +673,10 @@ Final submission. Status changes to `pending_review`. An SMS notification will b
 
 ## Error Codes
 
-| Code | HTTP Status | Description |
-|---|---|---|
-| VALIDATION_ERROR | 400 | Required field missing or invalid |
-| INVALID_FILE | 400 | File type or size not allowed |
-| REGISTRATION_NOT_FOUND | 404 | School registration ID not found |
-| PHONE_ALREADY_USED | 409 | Phone number already registered |
-| INCOMPLETE_REGISTRATION | 422 | Missing steps before submission |
+| Code                    | HTTP Status | Description                       |
+| ----------------------- | ----------- | --------------------------------- |
+| VALIDATION_ERROR        | 400         | Required field missing or invalid |
+| INVALID_FILE            | 400         | File type or size not allowed     |
+| REGISTRATION_NOT_FOUND  | 404         | School registration ID not found  |
+| PHONE_ALREADY_USED      | 409         | Phone number already registered   |
+| INCOMPLETE_REGISTRATION | 422         | Missing steps before submission   |

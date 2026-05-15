@@ -13,7 +13,7 @@ GET /api/v1/admin/schools/{id}/infrastructure    <-- building list + facility co
 Admin selects a building type (dropdown: School, etc.)
         |
         v
-GET /api/v1/admin/schools/{id}/infrastructure?building_type=school
+GET /api/v1/admin/schools/{id}/infrastructure?buildingType=school
         |
 Admin clicks "Manage Facility"
         |
@@ -29,27 +29,28 @@ PATCH /api/v1/admin/schools/{id}/infrastructure/{building_id}
 ---
 
 ### 1. Get School Infrastructure
+
 **GET** `/api/v1/admin/schools/{id}/infrastructure`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `building_type` | string | No | Filter by type: `school`, `hostel`, etc. (default: `school`) |
+| Parameter      | Type   | Required | Description                                                  |
+| -------------- | ------ | -------- | ------------------------------------------------------------ |
+| `buildingType` | string | No       | Filter by type: `school`, `hostel`, etc. (default: `school`) |
 
 **Response – 200 OK**
 
@@ -60,21 +61,77 @@ PATCH /api/v1/admin/schools/{id}/infrastructure/{building_id}
     "buildings": [
       {
         "id": "bld_001",
-        "building_number": 1,
-        "building_name": "Availability of School Infrastructure",
-        "building_type": "school",
-        "facilities": [
-          { "name": "Classroom", "count": 3 },
-          { "name": "Library", "count": 1 },
-          { "name": "Restrooms", "count": 4 },
-          { "name": "Computer Lab", "count": 0 },
-          { "name": "Principal's office", "count": 1 },
-          { "name": "Staff/Teacher's room", "count": 2 },
-          { "name": "Administrative office", "count": 1 }
+        "title": "Availability of School Infrastructure",
+        "buildingFacilities": [
+          {
+            "id": "bf_001",
+            "name": "Classroom",
+            "count": 3,
+            "otherSpecify": null,
+            "buildingFacilityTypeId": "cls"
+          },
+          {
+            "id": "bf_002",
+            "name": "Library",
+            "count": 1,
+            "otherSpecify": null,
+            "buildingFacilityTypeId": "lib"
+          },
+          {
+            "id": "bf_003",
+            "name": "Restrooms",
+            "count": 4,
+            "otherSpecify": null,
+            "buildingFacilityTypeId": "rest"
+          },
+          {
+            "id": "bf_004",
+            "name": "Computer Lab",
+            "count": 0,
+            "otherSpecify": null,
+            "buildingFacilityTypeId": "comp"
+          },
+          {
+            "id": "bf_005",
+            "name": "Principal's office",
+            "count": 1,
+            "otherSpecify": null,
+            "buildingFacilityTypeId": "prin"
+          },
+          {
+            "id": "bf_006",
+            "name": "Staff/Teacher's room",
+            "count": 2,
+            "otherSpecify": null,
+            "buildingFacilityTypeId": "staff"
+          },
+          {
+            "id": "bf_007",
+            "name": "Administrative office",
+            "count": 1,
+            "otherSpecify": null,
+            "buildingFacilityTypeId": "admin"
+          }
         ]
       }
     ],
-    "related_plans": {
+    "equipment": [
+      {
+        "id": "eq_001",
+        "name": "Desktop Computer",
+        "count": 10,
+        "otherSpecify": null,
+        "equipmentTypeId": "desktop"
+      },
+      {
+        "id": "eq_002",
+        "name": "Projector",
+        "count": 2,
+        "otherSpecify": null,
+        "equipmentTypeId": "proj"
+      }
+    ],
+    "relatedPlans": {
       "summary": {
         "total": 8,
         "pending": 2,
@@ -85,17 +142,17 @@ PATCH /api/v1/admin/schools/{id}/infrastructure/{building_id}
         {
           "id": "plan_001",
           "title": "School Development Plan",
-          "review_result": "Please revised"
+          "reviewResult": "Please revised"
         },
         {
           "id": "plan_002",
           "title": "Annual Budget Report",
-          "review_result": "Pending approval"
+          "reviewResult": "Pending approval"
         },
         {
           "id": "plan_003",
           "title": "Teacher Training Schedule",
-          "review_result": "To be finalized"
+          "reviewResult": "To be finalized"
         }
       ]
     }
@@ -108,50 +165,110 @@ PATCH /api/v1/admin/schools/{id}/infrastructure/{building_id}
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School ID does not exist |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `403`  | `FORBIDDEN`             | Insufficient role        |
+| `404`  | `SCHOOL_NOT_FOUND`      | School ID does not exist |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Rate limit exceeded      |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
 
 ---
 
 ### 2. Update Building Facility
+
 **PATCH** `/api/v1/admin/schools/{id}/infrastructure/{building_id}`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
-| `building_id` | string | Yes | Building UUID |
+| Parameter     | Type   | Required | Description   |
+| ------------- | ------ | -------- | ------------- |
+| `id`          | string | Yes      | School UUID   |
+| `building_id` | string | Yes      | Building UUID |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `facilities` | array | Yes | Array of facility objects with name and count |
+| Field                | Type  | Required | Description                |
+| -------------------- | ----- | -------- | -------------------------- |
+| `buildingFacilities` | array | Yes      | Array of facility objects  |
+| `equipment`          | array | Yes      | Array of equipment objects |
 
 ```json
 {
-  "facilities": [
-    { "name": "Classroom", "count": 4 },
-    { "name": "Library", "count": 1 },
-    { "name": "Restrooms", "count": 5 },
-    { "name": "Computer Lab", "count": 1 },
-    { "name": "Principal's office", "count": 1 },
-    { "name": "Staff/Teacher's room", "count": 2 },
-    { "name": "Administrative office", "count": 1 }
+  "buildingFacilities": [
+    {
+      "id": "bf_001",
+      "name": "Classroom",
+      "count": 4,
+      "otherSpecify": null,
+      "buildingFacilityTypeId": "cls"
+    },
+    {
+      "id": "bf_002",
+      "name": "Library",
+      "count": 1,
+      "otherSpecify": null,
+      "buildingFacilityTypeId": "lib"
+    },
+    {
+      "id": "bf_003",
+      "name": "Restrooms",
+      "count": 5,
+      "otherSpecify": null,
+      "buildingFacilityTypeId": "rest"
+    },
+    {
+      "id": "bf_004",
+      "name": "Computer Lab",
+      "count": 1,
+      "otherSpecify": null,
+      "buildingFacilityTypeId": "comp"
+    },
+    {
+      "id": "bf_005",
+      "name": "Principal's office",
+      "count": 1,
+      "otherSpecify": null,
+      "buildingFacilityTypeId": "prin"
+    },
+    {
+      "id": "bf_006",
+      "name": "Staff/Teacher's room",
+      "count": 2,
+      "otherSpecify": null,
+      "buildingFacilityTypeId": "staff"
+    },
+    {
+      "id": "bf_007",
+      "name": "Administrative office",
+      "count": 1,
+      "otherSpecify": null,
+      "buildingFacilityTypeId": "admin"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "eq_001",
+      "name": "Desktop Computer",
+      "count": 10,
+      "otherSpecify": null,
+      "equipmentTypeId": "desktop"
+    },
+    {
+      "id": "eq_002",
+      "name": "Projector",
+      "count": 2,
+      "otherSpecify": null,
+      "equipmentTypeId": "proj"
+    }
   ]
 }
 ```
@@ -162,13 +279,25 @@ PATCH /api/v1/admin/schools/{id}/infrastructure/{building_id}
 {
   "success": true,
   "data": {
-    "building_id": "bld_001",
-    "building_name": "Availability of School Infrastructure",
-    "facilities": [
-      { "name": "Classroom", "count": 4 },
-      { "name": "Library", "count": 1 }
+    "buildingId": "bld_001",
+    "title": "Availability of School Infrastructure",
+    "buildingFacilities": [
+      {
+        "id": "bf_001",
+        "name": "Classroom",
+        "count": 4,
+        "otherSpecify": null,
+        "buildingFacilityTypeId": "cls"
+      },
+      {
+        "id": "bf_002",
+        "name": "Library",
+        "count": 1,
+        "otherSpecify": null,
+        "buildingFacilityTypeId": "lib"
+      }
     ],
-    "updated_at": "2026-05-08T10:00:00Z"
+    "updatedAt": "2026-05-08T10:00:00Z"
   },
   "meta": null,
   "error": null,
@@ -178,25 +307,25 @@ PATCH /api/v1/admin/schools/{id}/infrastructure/{building_id}
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Invalid facility data |
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `BUILDING_NOT_FOUND` | Building ID does not exist |
-| `409` | `CONFLICT` | Concurrent update conflict |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description                |
+| ------ | ----------------------- | -------------------------- |
+| `400`  | `VALIDATION_ERROR`      | Invalid facility data      |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token   |
+| `403`  | `FORBIDDEN`             | Insufficient role          |
+| `404`  | `BUILDING_NOT_FOUND`    | Building ID does not exist |
+| `409`  | `CONFLICT`              | Concurrent update conflict |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Rate limit exceeded        |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault    |
 
 ## Error Codes
 
-| Code | HTTP Status | Description |
-|---|---|---|
-| `VALIDATION_ERROR` | 400 | Invalid facility data |
-| `UNAUTHORIZED` | 401 | Missing or invalid token |
-| `FORBIDDEN` | 403 | Insufficient role |
-| `SCHOOL_NOT_FOUND` | 404 | School not found |
-| `BUILDING_NOT_FOUND` | 404 | Building not found |
-| `CONFLICT` | 409 | Concurrent update conflict |
-| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected server error |
+| Code                    | HTTP Status | Description                |
+| ----------------------- | ----------- | -------------------------- |
+| `VALIDATION_ERROR`      | 400         | Invalid facility data      |
+| `UNAUTHORIZED`          | 401         | Missing or invalid token   |
+| `FORBIDDEN`             | 403         | Insufficient role          |
+| `SCHOOL_NOT_FOUND`      | 404         | School not found           |
+| `BUILDING_NOT_FOUND`    | 404         | Building not found         |
+| `CONFLICT`              | 409         | Concurrent update conflict |
+| `RATE_LIMIT_EXCEEDED`   | 429         | Too many requests          |
+| `INTERNAL_SERVER_ERROR` | 500         | Unexpected server error    |

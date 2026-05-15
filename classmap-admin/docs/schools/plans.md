@@ -59,29 +59,30 @@ GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by statu
 ---
 
 ### 1. List Plans
+
 **GET** `/api/v1/admin/schools/{id}/plans`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Query Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `status` | string | No | Filter: `pending`, `approved`, `funding_unavailable` |
-| `page` | integer | No | Page number (default: 1) |
-| `per_page` | integer | No | Items per page (default: 10) |
+| Parameter  | Type    | Required | Description                                                        |
+| ---------- | ------- | -------- | ------------------------------------------------------------------ |
+| `status`   | string  | No       | Filter: `unreviewed`, `approved`, `funding_unavailable`, `pending` |
+| `page`     | integer | No       | Page number (default: 1)                                           |
+| `limit` | integer | No       | Items per page (default: 10)                                       |
 
 **Response – 200 OK**
 
@@ -91,40 +92,38 @@ GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by statu
   "data": [
     {
       "id": "plan_001",
-      "sequence": 1,
-      "plan_type": "School Development Plan",
+      "reportType": { "id": "sdp", "name": "School Development Plan" },
       "title": "Round 1 – Implementation Report",
-      "status": "approved",
-      "objective": "...",
-      "target": "...",
-      "budget_line_items": [
+      "reportStatus": "approved",
+      "reportObjective": "...",
+      "reportTarget": "...",
+      "reportRequestItems": [
         {
-          "budget_line": "Item A",
-          "item": "Brick",
-          "unit": "pcs",
-          "quantity": 1,
-          "estimated_cost_per_unit": 1000,
-          "total": 1000
+          "name": "Brick",
+          "number": "Item A",
+          "count": 1000,
+          "cost": 1000,
+          "unit": "pcs"
         }
       ],
-      "created_at": "2026-01-10T08:00:00Z"
+      "createdAt": "2026-01-10T08:00:00Z"
     },
     {
       "id": "plan_002",
-      "sequence": 2,
-      "plan_type": "Annual Budget Review",
+      "reportType": { "id": "abr", "name": "Annual Budget Review" },
       "title": "Annual Supplies",
-      "status": "pending",
-      "objective": "Upgrade Inventory",
-      "target": "Procurement",
-      "budget_line_items": [],
-      "created_at": "2026-02-05T09:30:00Z"
+      "reportStatus": "unreviewed",
+      "reportObjective": "Upgrade Inventory",
+      "reportTarget": "Procurement",
+      "reportRequestItems": [],
+      "createdAt": "2026-02-05T09:30:00Z"
     }
   ],
   "meta": {
     "page": 1,
-    "per_page": 10,
-    "total": 8
+    "limit": 10,
+    "total": 8,
+    "totalPages": 5
   },
   "error": null,
   "message": "Successfully"
@@ -133,65 +132,69 @@ GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by statu
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School ID does not exist |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `403`  | `FORBIDDEN`             | Insufficient role        |
+| `404`  | `SCHOOL_NOT_FOUND`      | School ID does not exist |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Rate limit exceeded      |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
 
 ---
 
 ### 2. Create Plan
+
 **POST** `/api/v1/admin/schools/{id}/plans`
 
 **multipart/form-data**
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `multipart/form-data` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `multipart/form-data`     | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Request Fields**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `plan_type` | string | Yes | Plan type (e.g. `School Development Plan`) |
-| `plan_title` | string | Yes | Title of the plan |
-| `objective` | string | Yes | Goals the school aims to achieve |
-| `areas_for_development` | string (JSON array) | Yes | Key areas to focus on (JSON-encoded array of strings) |
-| `targets` | string | Yes | Measurable outcomes/milestones |
-| `progress` | string | Yes | Update on progress and achievements |
-| `budget_items` | string (JSON array) | No | Budget line items (JSON-encoded array) |
-| `photos` | file | No | Supporting photo files (multiple allowed) |
-| `documents` | file | No | Supporting document files (multiple allowed) |
+| Field                | Type                | Required | Description                                           |
+| -------------------- | ------------------- | -------- | ----------------------------------------------------- |
+| `reportTypeId`       | string              | Yes      | Report type ID                                        |
+| `title`              | string              | Yes      | Title of the plan                                     |
+| `reportObjective`    | string              | Yes      | Goals the school aims to achieve                      |
+| `reportAreaDevInd`   | string (JSON array) | Yes      | Key areas to focus on (JSON-encoded array of strings) |
+| `reportTarget`       | string              | Yes      | Measurable outcomes/milestones                        |
+| `reportProgress`     | string              | Yes      | Update on progress and achievements                   |
+| `memo`               | string              | No       | Additional notes                                      |
+| `buildingId`         | string              | No       | Related building ID                                   |
+| `reportRequestItems` | string (JSON array) | No       | Budget line items (JSON-encoded array)                |
+| `photos`             | file                | No       | Supporting photo files (multiple allowed)             |
+| `documents`          | file                | No       | Supporting document files (multiple allowed)          |
 
-**budget_items JSON structure:**
+**reportRequestItems JSON structure:**
+
 ```json
 [
   {
-    "budget_line": "Item A",
-    "item_description": "Brick",
-    "unit": "pcs",
-    "quantity": 1000,
-    "estimate_cost": 1000
+    "name": "Brick",
+    "number": "Item A",
+    "count": 1000,
+    "cost": 1000,
+    "unit": "pcs"
   },
   {
-    "budget_line": "Item B",
-    "item_description": "Painting",
-    "unit": "sets",
-    "quantity": 10,
-    "estimate_cost": 10000
+    "name": "Painting",
+    "number": "Item B",
+    "count": 10,
+    "cost": 10000,
+    "unit": "sets"
   }
 ]
 ```
@@ -203,10 +206,10 @@ GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by statu
   "success": true,
   "data": {
     "id": "plan_009",
-    "plan_type": "School Development Plan",
-    "plan_title": "2026 Infrastructure Upgrade",
-    "status": "pending",
-    "created_at": "2026-05-08T10:00:00Z"
+    "reportType": { "id": "sdp", "name": "School Development Plan" },
+    "title": "2026 Infrastructure Upgrade",
+    "reportStatus": "unreviewed",
+    "createdAt": "2026-05-08T10:00:00Z"
   },
   "meta": null,
   "error": null,
@@ -216,35 +219,36 @@ GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by statu
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Missing required fields |
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School ID does not exist |
-| `422` | `BUSINESS_RULE_VIOLATION` | Business rule violation |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code                | Description              |
+| ------ | ------------------------- | ------------------------ |
+| `400`  | `VALIDATION_ERROR`        | Missing required fields  |
+| `401`  | `UNAUTHORIZED`            | Missing or invalid token |
+| `403`  | `FORBIDDEN`               | Insufficient role        |
+| `404`  | `SCHOOL_NOT_FOUND`        | School ID does not exist |
+| `422`  | `BUSINESS_RULE_VIOLATION` | Business rule violation  |
+| `429`  | `RATE_LIMIT_EXCEEDED`     | Rate limit exceeded      |
+| `500`  | `INTERNAL_SERVER_ERROR`   | Unexpected server fault  |
 
 ---
 
 ### 3. Get Plan Detail
+
 **GET** `/api/v1/admin/schools/{id}/plans/{plan_id}`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
-| `plan_id` | string | Yes | Plan UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
+| `plan_id` | string | Yes      | Plan UUID   |
 
 **Response – 200 OK**
 
@@ -253,63 +257,42 @@ GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by statu
   "success": true,
   "data": {
     "id": "plan_001",
-    "review": {
-      "school_name": "Lincoln High School",
-      "school_location": "Hinthada District, Chin State",
-      "requested_teacher": "Zin Education Working Group",
-      "requested_by": "Tablez Traveling, Hpakn District, Chin State",
-      "reference_no": "00099062910"
-    },
-    "report_information": {
-      "plan_type": "School Development Plan",
-      "plan_title": "Round 1 – Implementation Report",
-      "objective": "...",
-      "areas_for_development": ["Infrastructure", "Teacher Training"],
-      "targets": "...",
-      "progress": "...",
-      "remarks": "..."
-    },
-    "financial_assistance": {
-      "budget_items": [
-        {
-          "budget_line": "Total",
-          "item": "",
-          "unit": "",
-          "quantity": null,
-          "kyat_per_quantity": null,
-          "total_kyat": 33326
-        },
-        {
-          "budget_line": "Brick",
-          "item": "Brick",
-          "unit": "",
-          "quantity": 1000,
-          "kyat_per_quantity": 1000,
-          "total_kyat": 1000
-        },
-        {
-          "budget_line": "Painting",
-          "item": "Painting",
-          "unit": "",
-          "quantity": 10,
-          "kyat_per_quantity": 10000,
-          "total_kyat": 100000
-        }
-      ]
-    },
-    "supporting_information": {
-      "photos": [
-        { "id": "img_001", "url": "https://storage.example.com/plans/img_001.jpg" }
-      ],
-      "documents": []
-    },
-    "timestamps": {
-      "requested_on": "2026-03-10T10:38:18Z",
-      "requested_by": "Daw Hla Hay",
-      "approved_on": "2026-09-04T15:54:00Z",
-      "approved_by": "U Ni"
-    },
-    "status": "approved"
+    "reportType": { "id": "sdp", "name": "School Development Plan" },
+    "title": "Round 1 – Implementation Report",
+    "reportObjective": "...",
+    "reportAreaDevInd": ["Infrastructure", "Teacher Training"],
+    "reportTarget": "...",
+    "reportProgress": "...",
+    "memo": "...",
+    "reportStatus": "approved",
+    "reviewResult": "Approved with minor revisions",
+    "reviewDate": "2026-09-04T15:54:00Z",
+    "buildingId": null,
+    "reportRequestItems": [
+      {
+        "name": "Brick",
+        "number": "Item A",
+        "count": 1000,
+        "cost": 1000,
+        "unit": "pcs"
+      },
+      {
+        "name": "Painting",
+        "number": "Item B",
+        "count": 10,
+        "cost": 10000,
+        "unit": "sets"
+      }
+    ],
+    "reportPhotos": [
+      {
+        "id": "img_001",
+        "url": "https://storage.example.com/plans/img_001.jpg"
+      }
+    ],
+    "reportDocs": [],
+    "createdAt": "2026-03-10T10:38:18Z",
+    "updatedAt": "2026-09-04T15:54:00Z"
   },
   "meta": null,
   "error": null,
@@ -319,35 +302,36 @@ GET /api/v1/admin/schools/{id}/plans         <-- list plans (filterable by statu
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `PLAN_NOT_FOUND` | Plan ID does not exist |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `403`  | `FORBIDDEN`             | Insufficient role        |
+| `404`  | `PLAN_NOT_FOUND`        | Plan ID does not exist   |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Rate limit exceeded      |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
 
 ---
 
 ### 4. Update Plan
+
 **PUT** `/api/v1/admin/schools/{id}/plans/{plan_id}`
 
 **multipart/form-data**
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `multipart/form-data` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `multipart/form-data`     | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
-| `plan_id` | string | Yes | Plan UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
+| `plan_id` | string | Yes      | Plan UUID   |
 
 **Request Fields**
 
@@ -360,9 +344,9 @@ Same fields as [Create Plan](#2-create-plan). All required fields must be includ
   "success": true,
   "data": {
     "id": "plan_001",
-    "plan_title": "Round 1 – Implementation Report (Revised)",
-    "status": "pending",
-    "updated_at": "2026-05-08T11:00:00Z"
+    "title": "Round 1 – Implementation Report (Revised)",
+    "reportStatus": "unreviewed",
+    "updatedAt": "2026-05-08T11:00:00Z"
   },
   "meta": null,
   "error": null,
@@ -372,35 +356,36 @@ Same fields as [Create Plan](#2-create-plan). All required fields must be includ
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Invalid input |
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `PLAN_NOT_FOUND` | Plan not found |
-| `409` | `CONFLICT` | Concurrent update conflict |
-| `422` | `BUSINESS_RULE_VIOLATION` | Business rule violation |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code                | Description                |
+| ------ | ------------------------- | -------------------------- |
+| `400`  | `VALIDATION_ERROR`        | Invalid input              |
+| `401`  | `UNAUTHORIZED`            | Missing or invalid token   |
+| `403`  | `FORBIDDEN`               | Insufficient role          |
+| `404`  | `PLAN_NOT_FOUND`          | Plan not found             |
+| `409`  | `CONFLICT`                | Concurrent update conflict |
+| `422`  | `BUSINESS_RULE_VIOLATION` | Business rule violation    |
+| `429`  | `RATE_LIMIT_EXCEEDED`     | Rate limit exceeded        |
+| `500`  | `INTERNAL_SERVER_ERROR`   | Unexpected server fault    |
 
 ---
 
 ### 5. Delete Plan
+
 **DELETE** `/api/v1/admin/schools/{id}/plans/{plan_id}`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
-| `plan_id` | string | Yes | Plan UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
+| `plan_id` | string | Yes      | Plan UUID   |
 
 **Response – 204 No Content**
 
@@ -408,40 +393,41 @@ No body returned.
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `PLAN_NOT_FOUND` | Plan not found |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `403`  | `FORBIDDEN`             | Insufficient role        |
+| `404`  | `PLAN_NOT_FOUND`        | Plan not found           |
+| `429`  | `RATE_LIMIT_EXCEEDED`   | Rate limit exceeded      |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
 
 ---
 
 ### 6. Review Plan
+
 **POST** `/api/v1/admin/schools/{id}/plans/{plan_id}/review`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `Content-Type` | `application/json` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `Content-Type`  | `application/json`        | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
-| `plan_id` | string | Yes | Plan UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
+| `plan_id` | string | Yes      | Plan UUID   |
 
 **Request Body**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `decision` | string | Yes | Review decision: `approved`, `rejected`, `funding_unavailable` |
-| `remarks` | string | No | Review remarks or feedback |
+| Field      | Type   | Required | Description                                                    |
+| ---------- | ------ | -------- | -------------------------------------------------------------- |
+| `decision` | string | Yes      | Review decision: `approved`, `rejected`, `funding_unavailable` |
+| `remarks`  | string | No       | Review remarks or feedback                                     |
 
 ```json
 {
@@ -456,10 +442,10 @@ No body returned.
 {
   "success": true,
   "data": {
-    "plan_id": "plan_001",
-    "status": "approved",
-    "reviewed_at": "2026-05-08T12:00:00Z",
-    "reviewed_by": "Taylor"
+    "id": "plan_001",
+    "reportStatus": "approved",
+    "reviewResult": "Approved with minor revisions",
+    "reviewDate": "2026-05-08T12:00:00Z"
   },
   "meta": null,
   "error": null,
@@ -469,33 +455,34 @@ No body returned.
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `400` | `VALIDATION_ERROR` | Invalid decision value |
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `PLAN_NOT_FOUND` | Plan not found |
-| `422` | `BUSINESS_RULE_VIOLATION` | Plan already reviewed |
-| `429` | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code                | Description              |
+| ------ | ------------------------- | ------------------------ |
+| `400`  | `VALIDATION_ERROR`        | Invalid decision value   |
+| `401`  | `UNAUTHORIZED`            | Missing or invalid token |
+| `403`  | `FORBIDDEN`               | Insufficient role        |
+| `404`  | `PLAN_NOT_FOUND`          | Plan not found           |
+| `422`  | `BUSINESS_RULE_VIOLATION` | Plan already reviewed    |
+| `429`  | `RATE_LIMIT_EXCEEDED`     | Rate limit exceeded      |
+| `500`  | `INTERNAL_SERVER_ERROR`   | Unexpected server fault  |
 
 ---
 
 ### 7. Export Plans
+
 **GET** `/api/v1/admin/schools/{id}/plans/export`
 
 **Headers**
 
-| Key | Value | Required |
-|---|---|---|
-| `Authorization` | `Bearer {{access_token}}` | Yes |
-| `X-Request-ID` | `<uuid>` | Yes |
+| Key             | Value                     | Required |
+| --------------- | ------------------------- | -------- |
+| `Authorization` | `Bearer {{access_token}}` | Yes      |
+| `X-Request-ID`  | `<uuid>`                  | Yes      |
 
 **Path Parameters**
 
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | Yes | School UUID |
+| Parameter | Type   | Required | Description |
+| --------- | ------ | -------- | ----------- |
+| `id`      | string | Yes      | School UUID |
 
 **Response – 200 OK**
 
@@ -503,23 +490,23 @@ Returns a binary file download (`Content-Type: application/vnd.openxmlformats-of
 
 **Response – 4xx / 5xx**
 
-| Status | Error Code | Description |
-|---|---|---|
-| `401` | `UNAUTHORIZED` | Missing or invalid token |
-| `403` | `FORBIDDEN` | Insufficient role |
-| `404` | `SCHOOL_NOT_FOUND` | School not found |
-| `500` | `INTERNAL_SERVER_ERROR` | Unexpected server fault |
+| Status | Error Code              | Description              |
+| ------ | ----------------------- | ------------------------ |
+| `401`  | `UNAUTHORIZED`          | Missing or invalid token |
+| `403`  | `FORBIDDEN`             | Insufficient role        |
+| `404`  | `SCHOOL_NOT_FOUND`      | School not found         |
+| `500`  | `INTERNAL_SERVER_ERROR` | Unexpected server fault  |
 
 ## Error Codes
 
-| Code | HTTP Status | Description |
-|---|---|---|
-| `VALIDATION_ERROR` | 400 | Invalid or missing fields |
-| `UNAUTHORIZED` | 401 | Missing or invalid token |
-| `FORBIDDEN` | 403 | Insufficient role |
-| `SCHOOL_NOT_FOUND` | 404 | School not found |
-| `PLAN_NOT_FOUND` | 404 | Plan not found |
-| `CONFLICT` | 409 | Concurrent update conflict |
-| `BUSINESS_RULE_VIOLATION` | 422 | Business rule failed |
-| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected server error |
+| Code                      | HTTP Status | Description                |
+| ------------------------- | ----------- | -------------------------- |
+| `VALIDATION_ERROR`        | 400         | Invalid or missing fields  |
+| `UNAUTHORIZED`            | 401         | Missing or invalid token   |
+| `FORBIDDEN`               | 403         | Insufficient role          |
+| `SCHOOL_NOT_FOUND`        | 404         | School not found           |
+| `PLAN_NOT_FOUND`          | 404         | Plan not found             |
+| `CONFLICT`                | 409         | Concurrent update conflict |
+| `BUSINESS_RULE_VIOLATION` | 422         | Business rule failed       |
+| `RATE_LIMIT_EXCEEDED`     | 429         | Too many requests          |
+| `INTERNAL_SERVER_ERROR`   | 500         | Unexpected server error    |
